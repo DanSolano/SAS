@@ -177,6 +177,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +213,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\bootstrap-datepicker\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bootstrap-timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Content\bootstrap-select\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap-switch\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
@@ -226,6 +229,8 @@
     <Content Include="Content\ionrangeslider\ion.rangeSlider.skinFlat.css" />
     <Content Include="Content\jquery.scrollbar\jquery.scrollbar.css" />
     <Content Include="Content\morris\morris.css" />
+    <Content Include="Content\selectize\selectize.bootstrap3.css" />
+    <Content Include="Content\selectize\selectize.default.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -268,17 +273,21 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\own\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\own\bootstrap-select\bootstrap-select.min.js" />
     <Content Include="Scripts\own\bootstrap-switch\bootstrap-switch.min.js" />
     <Content Include="Scripts\own\bootstrap-tabdrop\bootstrap-tabdrop.min.js" />
+    <Content Include="Scripts\own\bootstrap-timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Scripts\own\demo.js" />
     <Content Include="Scripts\own\inputNumber\inputNumber.js" />
     <Content Include="Scripts\own\ionrangeslider\ion.rangeSlider.min.js" />
     <Content Include="Scripts\own\jquery-sparkline\jquery.sparkline.min.js" />
     <Content Include="Scripts\own\jquery.scrollbar\jquery.scrollbar.min.js" />
     <Content Include="Scripts\own\main.js" />
-    <Content Include="Scripts\own\morris.js\morris.min.js" />
+    <Content Include="Scripts\own\morris\morris.min.js" />
     <Content Include="Scripts\own\raphael\raphael.min.js" />
+    <Content Include="Scripts\own\selectize\selectize.min.js" />
+    <Content Include="Scripts\own\template\controls.js" />
     <Content Include="Scripts\own\template\index.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -295,9 +304,14 @@
     <Content Include="Views\Home\AdminOnlyLink.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Themes\Theme.cshtml" />
+    <Content Include="Views\User\Sidebar.cshtml" />
+    <Content Include="Views\User\TopNavbar.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\MainAddSAS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

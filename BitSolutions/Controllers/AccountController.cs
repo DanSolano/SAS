@@ -97,8 +97,12 @@ namespace BitSolutions.Controllers
                         Session["role_id"] = logindetails.role_id;
                         // Info.
                         //return RedirectToLocal(returnUrl);
-                        return RedirectToAction("Index", "Home");
-                        return RedirectToAction("Management", "Home");
+
+                        //return RedirectToAction("Index", "Home");
+                        //return RedirectToAction("Management", "Home");
+
+                        return RedirectToAction("Index", "User", new { data = "Datos de prueba" });
+
                     }
                     else
                     {

@@ -1,0 +1,28 @@
+﻿<div class="topnavbar">
+    <ul class="nav navbar-nav navbar-left">
+        <li class="active"><a href="index.html"><span>Dashboard</span></a></li>
+        <li><a href="inbox.html"><span>Mailbox</span></a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span>Pages&nbsp;<i class="caret"></i></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="products.html"><span>Products</span></a></li>
+                <li><a href="orders.html"><span>Orders</span></a></li>
+                <li><a href="users.html"><span>Users</span></a></li>
+                <li class="divider" role="separator"></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="blank.html">Blank</a></li>
+            </ul>
+        </li>
+    </ul>
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        <ul class="userbar nav navbar-nav">
+            <li class="dropdown">
+                <a class="userbar__settings dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-power-off"></i></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+    }
+</div>
