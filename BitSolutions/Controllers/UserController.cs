@@ -8,6 +8,26 @@ namespace BitSolutions.Controllers
 {
     public class UserController : Controller
     {
+        //[Authorize]
+        //public RedirectResult Intermediary()
+        //{
+        //    string role = Session["role_id"].ToString();
+
+        //    switch (role)
+        //    {
+        //        case "1": //Administrador
+        //            RedirectToAction("Index", "User", new { data = "Datos de prueba" });
+        //            break;
+        //        case "2": //Cliente
+        //            RedirectToAction("Index", "User", new { data = "Datos de prueba" });
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    RedirectToAction("Index", "User", new { data = "Datos de prueba" });
+        //}
+
         // GET: User
         [Authorize]
         public ActionResult Index(string data)

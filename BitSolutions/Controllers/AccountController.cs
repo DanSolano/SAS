@@ -17,10 +17,7 @@ namespace BitSolutions.Controllers
     {
         #region Private Properties
 
-        /// <summary>
-        /// Database Store property.
-        /// </summary>
-        private RoleBaseAccessibilityEntities databaseManager = new RoleBaseAccessibilityEntities();
+        private SASEntities dbManager = new SASEntities();
 
         #endregion
 
@@ -37,13 +34,7 @@ namespace BitSolutions.Controllers
 
         #region Login methods
 
-        /// <summary>
-        /// GET: /Account/Login
-        /// </summary>
-        /// <param name="returnUrl">Return URL parameter</param>
-        /// <returns>Return login view</returns>
         [AllowAnonymous]
-   
         public ActionResult Login(string returnUrl)
         {
             try
@@ -55,46 +46,31 @@ namespace BitSolutions.Controllers
                     return RedirectToLocal(returnUrl);
                 }
             }
-            catch (Exception ex)
-            {
-                // Info
-                Console.Write(ex);
-            }
+            catch (Exception ex){}
 
-            // Info.
             return View();
         }
 
-        /// <summary>
-        /// POST: /Account/Login
-        /// </summary>
-        /// <param name="model">Model parameter</param>
-        /// <param name="returnUrl">Return URL parameter</param>
-        /// <returns>Return login view</returns>
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(Login model, string returnUrl)
+        public ActionResult Login(DB_RRHH_Employee model, string returnUrl)
         {
             try
             {
-                // Verification.
                 if (ModelState.IsValid)
                 {
-                    // Initialization.
-                    var loginInfo = this.databaseManager.LoginByUsernamePassword(model.username, model.password).ToList();
+                    var loginInfo =  dbManager.LoginByUsernamePassword(model.UserName, model.Password).ToList();
 
                     // Verification.
                     if (loginInfo != null && loginInfo.Count() > 0)
                     {
-                        // Initialization.
                         var logindetails = loginInfo.First();
 
-                        // Login In.
-                        SignInUser(logindetails.username, logindetails.role_id, false);
+                        SignInUser(logindetails.UserName, logindetails.ID_Rol, false);
 
-                        // setting.
-                        Session["role_id"] = logindetails.role_id;
+                        Session["role_id"] = logindetails.ID_Rol;
                         // Info.
                         //return RedirectToLocal(returnUrl);
 
@@ -106,18 +82,12 @@ namespace BitSolutions.Controllers
                     }
                     else
                     {
-                        // Setting.
                         ModelState.AddModelError(string.Empty, "Invalid username or password.");
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                // Info
-                Console.WriteLine(ex);
-            }
+            catch (Exception ex){}
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
@@ -130,7 +100,7 @@ namespace BitSolutions.Controllers
         /// </summary>
         /// <returns>Return log off action</returns>
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult LogOff()
         {
             try
@@ -142,11 +112,7 @@ namespace BitSolutions.Controllers
                 // Sign Out.
                 authenticationManager.SignOut();
             }
-            catch (Exception ex)
-            {
-                // Info
-                throw ex;
-            }
+            catch (Exception ex){}
 
             // Info.
             return RedirectToAction("Login", "Account");
@@ -164,6 +130,7 @@ namespace BitSolutions.Controllers
         /// <param name="username">Username parameter.</param>
         /// <param name="role_id">Role ID parameter</param>
         /// <param name="isPersistent">Is persistent parameter.</param>
+        [Authorize]
         private void SignInUser(string username, int role_id, bool isPersistent)
         {
             // Initialization.
@@ -181,11 +148,7 @@ namespace BitSolutions.Controllers
                 // Sign In.
                 authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
             }
-            catch (Exception ex)
-            {
-                // Info
-                throw ex;
-            }
+            catch (Exception ex){}
         }
 
         #endregion
@@ -197,6 +160,7 @@ namespace BitSolutions.Controllers
         /// </summary>
         /// <param name="returnUrl">Return URL parameter.</param>
         /// <returns>Return redirection action</returns>
+        [Authorize]
         private ActionResult RedirectToLocal(string returnUrl)
         {
             try

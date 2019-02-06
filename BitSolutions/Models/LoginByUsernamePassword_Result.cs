@@ -13,9 +13,8 @@ namespace BitSolutions.Models
     
     public partial class LoginByUsernamePassword_Result
     {
-        public int id { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public int role_id { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public int ID_Rol { get; set; }
     }
 }

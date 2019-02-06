@@ -12,18 +12,16 @@ namespace BitSolutions.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Employee_Ticket
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
-        {
-            this.Logins = new HashSet<Login>();
-        }
+        public int ID_Employee { get; set; }
+        public int ID_Ticket { get; set; }
+        public Nullable<int> ID_Client { get; set; }
+        public Nullable<int> ID_User_Assign { get; set; }
     
-        public int role_id { get; set; }
-        public string role1 { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Login> Logins { get; set; }
+        public virtual DB_Client DB_Client { get; set; }
+        public virtual DB_RRHH_Employee DB_RRHH_Employee { get; set; }
+        public virtual DB_RRHH_Employee DB_RRHH_Employee1 { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }
