@@ -1,6 +1,10 @@
-﻿@Styles.Render("~/Content/BaseCss");
+﻿@model BitSolutions.Models.Ticket
 
-@ViewBag.prueba
+
+@Styles.Render("~/Content/BaseCss");
+
+@ViewBag.TypeForm
+
 
 <nav class="navbar navbar-static-top header-navbar">
     <div class="header-navbar-mobile">
@@ -31,7 +35,7 @@
 </nav>
 
 <div class="dashboard">
-    @Html.Partial("Sidebar", (string)@ViewBag.prueba)
+    @Html.Partial("Sidebar", Model)
 </div>
 
 @Scripts.Render("~/bundles/BaseJS");

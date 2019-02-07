@@ -392,6 +392,23 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spAddTicket">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="datein" Mode="In" Type="DateTime" />
+      <Parameter Name="dateout" Mode="In" Type="DateTime" />
+      <Parameter Name="status" Mode="In" Type="String" />
+      <Parameter Name="priority" Mode="In" Type="String" />
+      <Parameter Name="description" Mode="In" Type="String" />
+      <Parameter Name="category" Mode="In" Type="String" />
+      <Parameter Name="urlimage" Mode="In" Type="String" />
+      <Parameter Name="urldoc" Mode="In" Type="String" />
+      <Parameter Name="datecreate" Mode="In" Type="DateTime" />
+      <Parameter Name="result" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spLoginByUsernamePassword" ReturnType="Collection(SASModel.spLoginByUsernamePassword_Result)">
+      <Parameter Name="username" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="LoginByUsernamePassword_Result">
     <Property Type="String" Name="UserName" Nullable="false" MaxLength="45" />
@@ -408,5 +425,10 @@
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spLoginByUsernamePassword_Result">
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="45" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="ID_Rol" Nullable="false" />
   </ComplexType>
 </Schema>

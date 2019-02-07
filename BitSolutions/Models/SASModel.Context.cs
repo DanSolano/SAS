@@ -15,9 +15,9 @@ namespace BitSolutions.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class SASEntities : DbContext
+    public partial class SAS_2019Entities : DbContext
     {
-        public SASEntities()
+        public SAS_2019Entities()
             : base("name=SAS_2019Entities")
         {
         }
@@ -38,7 +38,7 @@ namespace BitSolutions.Models
         public virtual DbSet<Ticket_History> Ticket_History { get; set; }
         public virtual DbSet<User_Rol> User_Rol { get; set; }
     
-        public virtual ObjectResult<LoginByUsernamePassword_Result> LoginByUsernamePassword(string username, string password)
+        public virtual ObjectResult<spLoginByUsernamePassword_Result> LoginByUsernamePassword(string username, string password)
         {
             var usernameParameter = username != null ?
                 new ObjectParameter("username", username) :
@@ -48,7 +48,7 @@ namespace BitSolutions.Models
                 new ObjectParameter("password", password) :
                 new ObjectParameter("password", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoginByUsernamePassword_Result>("LoginByUsernamePassword", usernameParameter, passwordParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spLoginByUsernamePassword_Result>("spLoginByUsernamePassword", usernameParameter, passwordParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
@@ -152,6 +152,64 @@ namespace BitSolutions.Models
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual int spAddTicket(string username, Nullable<System.DateTime> datein, Nullable<System.DateTime> dateout, string status, string priority, string description, string category, string urlimage, string urldoc, Nullable<System.DateTime> datecreate, ObjectParameter result)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var dateinParameter = datein.HasValue ?
+                new ObjectParameter("datein", datein) :
+                new ObjectParameter("datein", typeof(System.DateTime));
+    
+            var dateoutParameter = dateout.HasValue ?
+                new ObjectParameter("dateout", dateout) :
+                new ObjectParameter("dateout", typeof(System.DateTime));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var priorityParameter = priority != null ?
+                new ObjectParameter("priority", priority) :
+                new ObjectParameter("priority", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            var categoryParameter = category != null ?
+                new ObjectParameter("category", category) :
+                new ObjectParameter("category", typeof(string));
+    
+            var urlimageParameter = urlimage != null ?
+                new ObjectParameter("urlimage", urlimage) :
+                new ObjectParameter("urlimage", typeof(string));
+    
+            var urldocParameter = urldoc != null ?
+                new ObjectParameter("urldoc", urldoc) :
+                new ObjectParameter("urldoc", typeof(string));
+    
+            var datecreateParameter = datecreate.HasValue ?
+                new ObjectParameter("datecreate", datecreate) :
+                new ObjectParameter("datecreate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAddTicket", usernameParameter, dateinParameter, dateoutParameter, statusParameter, priorityParameter, descriptionParameter, categoryParameter, urlimageParameter, urldocParameter, datecreateParameter, result);
+        }
+    
+        public virtual ObjectResult<spLoginByUsernamePassword_Result> spLoginByUsernamePassword(string username, string password)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spLoginByUsernamePassword_Result>("spLoginByUsernamePassword", usernameParameter, passwordParameter);
         }
     }
 }

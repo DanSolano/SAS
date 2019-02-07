@@ -48,8 +48,10 @@ namespace BitSolutions
                       "~/Content/bootstrap-timepicker/bootstrap-timepicker.min.css",
                       "~/Content/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css",
                       "~/Content/bootstrap-select/bootstrap-select.min.css",
+                      "~/Content/datatables/dataTables.bootstrap.css",
                       "~/Content/css/right.dark.css",
-                      "~/Content/css/demo.css"));
+                      "~/Content/css/demo.css",
+                      "~/Content/own/Style.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/BaseJS").Include(
                       "~/Scripts/own/jquery.scrollbar/jquery.scrollbar.min.js",
@@ -66,9 +68,19 @@ namespace BitSolutions
                       "~/Scripts/own/bootstrap-select/bootstrap-select.min.js",
                       "~/Scripts/own/template/index.js",
                       "~/Scripts/own/template/controls.js",
+                      "~/Scripts/own/datatables/jquery.dataTables.js",
+                      "~/Scripts/own/dataTables/bootstrap.js",
+                      "~/Scripts/own/dataTables/table_data.js",
                       "~/Scripts/own/main.js",
                       "~/Scripts/own/demo.js"));
 
+            /*File input CSS*/
+            bundles.Add(new StyleBundle("~/Content/FileInputCss").Include(
+                      "~/Content/jasny/jasny-bootstrap.css"));
+
+            /*File input JS*/
+            bundles.Add(new StyleBundle("~/Content/FileInputJS").Include(
+                      "~/Scripts/own/jasny/jasny-bootstrap.js"));
 
         }
     }

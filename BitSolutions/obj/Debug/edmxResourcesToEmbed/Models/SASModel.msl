@@ -122,15 +122,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="LoginByUsernamePassword" FunctionName="SASModel.Store.LoginByUsernamePassword">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="SASModel.LoginByUsernamePassword_Result">
-          <ScalarProperty Name="UserName" ColumnName="UserName" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SASModel.Store.sp_alterdiagram" />
     <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SASModel.Store.sp_creatediagram" />
     <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SASModel.Store.sp_dropdiagram" />
@@ -155,5 +146,15 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SASModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SASModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spAddTicket" FunctionName="SASModel.Store.spAddTicket" />
+    <FunctionImportMapping FunctionImportName="spLoginByUsernamePassword" FunctionName="SASModel.Store.spLoginByUsernamePassword">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SASModel.spLoginByUsernamePassword_Result">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

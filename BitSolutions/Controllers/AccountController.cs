@@ -17,7 +17,7 @@ namespace BitSolutions.Controllers
     {
         #region Private Properties
 
-        private SASEntities dbManager = new SASEntities();
+        private SAS_2019Entities dbManager;
 
         #endregion
 
@@ -28,6 +28,7 @@ namespace BitSolutions.Controllers
         /// </summary>
         public AccountController()
         {
+            dbManager = new SAS_2019Entities();
         }
 
         #endregion
@@ -71,14 +72,10 @@ namespace BitSolutions.Controllers
                         SignInUser(logindetails.UserName, logindetails.ID_Rol, false);
 
                         Session["role_id"] = logindetails.ID_Rol;
-                        // Info.
-                        //return RedirectToLocal(returnUrl);
+                        Session["username"] = model.UserName;
 
-                        //return RedirectToAction("Index", "Home");
-                        //return RedirectToAction("Management", "Home");
-
-                        return RedirectToAction("Index", "User", new { data = "Datos de prueba" });
-
+                        //return RedirectToAction("Intermediary", "User", new { data = "Datos de prueba" });
+                        return RedirectToAction("Intermediary", "User");
                     }
                     else
                     {

@@ -257,6 +257,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SASModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\spLoginByUsernamePassword_Result.cs">
+      <DependentUpon>SASModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>SASModel.tt</DependentUpon>
     </Compile>
@@ -296,13 +299,16 @@
     <Content Include="Content\css\right.dark.css" />
     <Content Include="Content\css\right.light.css" />
     <Content Include="Content\css\right.lilac.css" />
+    <Content Include="Content\datatables\dataTables.bootstrap.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\ionrangeslider\ion.rangeSlider.css" />
     <Content Include="Content\ionrangeslider\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Content\jasny\jasny-bootstrap.css" />
     <Content Include="Content\jquery.scrollbar\jquery.scrollbar.css" />
     <Content Include="Content\morris\morris.css" />
+    <Content Include="Content\own\Style.css" />
     <Content Include="Content\selectize\selectize.bootstrap3.css" />
     <Content Include="Content\selectize\selectize.default.css" />
     <Content Include="favicon.ico" />
@@ -390,9 +396,13 @@
     <Content Include="Scripts\own\bootstrap-switch\bootstrap-switch.min.js" />
     <Content Include="Scripts\own\bootstrap-tabdrop\bootstrap-tabdrop.min.js" />
     <Content Include="Scripts\own\bootstrap-timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\own\datatables\dataTables.bootstrap.js" />
+    <Content Include="Scripts\own\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\own\datatables\table_data.js" />
     <Content Include="Scripts\own\demo.js" />
     <Content Include="Scripts\own\inputNumber\inputNumber.js" />
     <Content Include="Scripts\own\ionrangeslider\ion.rangeSlider.min.js" />
+    <Content Include="Scripts\own\jasny\jasny-bootstrap.js" />
     <Content Include="Scripts\own\jquery-sparkline\jquery.sparkline.min.js" />
     <Content Include="Scripts\own\jquery.scrollbar\jquery.scrollbar.min.js" />
     <Content Include="Scripts\own\main.js" />
@@ -418,10 +428,11 @@
     <Content Include="Views\Themes\Theme.cshtml" />
     <Content Include="Views\User\Sidebar.cshtml" />
     <Content Include="Views\User\TopNavbar.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\MainAddSAS.cshtml" />
+    <Content Include="Views\User\IndexCoordinator.cshtml" />
+    <Content Include="Views\User\MainSAS.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\SAS\SAS.cshtml" />
+    <Content Include="Views\SAS\CreateSASCoordinator.cshtml" />
+    <Content Include="Views\SAS\ViewSASCoordinator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,8 +11,7 @@ namespace BitSolutions.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class DB_RRHH_Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,15 +27,9 @@ namespace BitSolutions.Models
     
         public int ID { get; set; }
         public string identification { get; set; }
-
-        [Required]
-        [Display(Name = "User name")]
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
-        [Required]
-        [Display(Name = "Password")]
         public string Password { get; set; }
         public string PhoneNumber1 { get; set; }
         public string PhoneNumber2 { get; set; }

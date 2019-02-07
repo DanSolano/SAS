@@ -270,10 +270,6 @@
     </ReferentialConstraint>
   </Association>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-  <Function Name="LoginByUsernamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="username" Type="varchar" Mode="In" />
-    <Parameter Name="password" Type="varchar" Mode="In" />
-  </Function>
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -304,6 +300,23 @@
     <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="spAddTicket" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="nvarchar" Mode="In" />
+    <Parameter Name="datein" Type="date" Mode="In" />
+    <Parameter Name="dateout" Type="date" Mode="In" />
+    <Parameter Name="status" Type="nvarchar" Mode="In" />
+    <Parameter Name="priority" Type="nvarchar" Mode="In" />
+    <Parameter Name="description" Type="nvarchar" Mode="In" />
+    <Parameter Name="category" Type="nvarchar" Mode="In" />
+    <Parameter Name="urlimage" Type="nvarchar" Mode="In" />
+    <Parameter Name="urldoc" Type="nvarchar" Mode="In" />
+    <Parameter Name="datecreate" Type="datetime" Mode="In" />
+    <Parameter Name="result" Type="nvarchar" Mode="InOut" />
+  </Function>
+  <Function Name="spLoginByUsernamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="username" Type="varchar" Mode="In" />
+    <Parameter Name="password" Type="varchar" Mode="In" />
+  </Function>
   <EntityContainer Name="SASModelStoreContainer">
     <EntitySet Name="DB_Client" EntityType="Self.DB_Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DB_RRHH_Employee" EntityType="Self.DB_RRHH_Employee" Schema="dbo" store:Type="Tables" />
