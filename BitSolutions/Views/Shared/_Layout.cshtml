@@ -27,11 +27,29 @@
 
     @*@Scripts.Render("~/bundles/BaseJS");*@
 
+    @Html.Partial("~/Views/Themes/Theme.cshtml");
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
 
+<script>
+    @*$(document).ready(function () {
 
+        $('#slFilter').on('change', function () {
+            //let optionText = $("#slFilter option:selected").text();
+
+            var optionValue = $(this).val();
+
+            $.ajax({
+                url: '@Url.Action("SearchTicketByParameter", "SAS")',
+                data: { searchParameter: optionValue }
+            }).done(function () {
+                
+            });
+        });
+    });*@
+</script>
 
 
 

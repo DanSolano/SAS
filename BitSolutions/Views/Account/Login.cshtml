@@ -1,4 +1,4 @@
-﻿@model BitSolutions.Models.DB_RRHH_Employee
+﻿@model BitSolutions.Models.RRHHEmployee.DB_RRHH_Employee
 
 @section Styles {
     @Styles.Render("~/Content/LoginCss")
@@ -23,7 +23,7 @@
 
         <div class="form-group login__action">
             <div class="login__submit">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Login" class="btn btn-default" />
             </div>
         </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -31,7 +31,7 @@
 
 </div>
 
-@Html.Partial("~/Views/Themes/Theme.cshtml");
+@*@Html.Partial("~/Views/Themes/Theme.cshtml");*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/LoginJs")

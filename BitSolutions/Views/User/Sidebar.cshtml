@@ -1,7 +1,7 @@
-﻿@model BitSolutions.Models.Ticket
+﻿@model BitSolutions.Models.SAS.Ticket
 
 
-@ViewBag.TypeForm
+@*@ViewBag.TypeForm*@
 
 <div class="sidebar">
     <div class="quickmenu">
@@ -98,16 +98,38 @@
                     <li>
                         <a href="#">
                             <div class="nav-menu__ico"><i class="fa fa-fw fa-clone"></i></div>
-                            <div class="nav-menu__text"><span>Funciones</span></div>
+                            <div class="nav-menu__text"><span>Solicitud</span></div>
                             <div class="nav-menu__right"><i class="fa fa-fw fa-angle-right arrow"></i></div>
                         </a>
                         <ul class="nav nav-menu__second collapse">
-                            <li>
-                                @Html.ActionLink("Ingresar solicitud", "IndexSASCoordinator", "User", new { data = "addSAS" }, null)
-                            </li>
-                            <li>
-                                @Html.ActionLink("Ver solicitud", "IndexSASCoordinator", "User", new { data = "viewSAS" }, null)
-                            </li>
+                            @if (@ViewBag.typeUser != null)
+                            {
+                                switch (@ViewBag.typeUser)
+                                {
+                                    case "Coordinator":
+                                        <li>
+                                            @Html.ActionLink("Ingresar solicitud", "IndexSAS", "User", new { data = "addSAS", typeUser = "Coordinator" }, null)
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Ver solicitud", "IndexSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
+                                        </li>
+                                        break;
+                                    case "Client":
+                                        <li>
+                                            @Html.ActionLink("Ingresar solicitud", "IndexSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
+                                        </li>
+
+                                        break;
+                                    case "HelpDeskCoordinator":
+                                        <li>
+                                            @Html.ActionLink("Mesa de ayuda", "IndexSAS", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" }, null)
+                                        </li>
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
                             @*<li><a href="texteditor.html">Text Editor</a></li>*@
                         </ul>
                     </li>
@@ -371,4 +393,5 @@
         </div>
     </div>
 </div>
+
 @Html.Partial("MainSAS",Model)

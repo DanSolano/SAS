@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_RRHH_EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DB_RRHH_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="identification" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber1" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="PhoneNumber2" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="DateBirth" Type="date" Nullable="false" />
+    <Property Name="DateIn" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DB_RRHH_History">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="int" Nullable="false" />
+    <Property Name="User_Update" Type="int" />
+    <Property Name="Change_Date" Type="datetime" Nullable="false" />
+    <Property Name="User_Create" Type="int" />
+    <Property Name="Date_Create" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Direction">
+    <Key>
+      <PropertyRef Name="ID_User" />
+    </Key>
+    <Property Name="ID_User" Type="int" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="District" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="Street" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="URL_Google_Maps" Type="nvarchar" MaxLength="500" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__DB_RRHH_H__ID_Us__619B8048">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="1" />
+    <End Role="DB_RRHH_History" Type="Self.DB_RRHH_History" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DB_RRHH_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DB_RRHH_History">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DB_RRHH_H__User___628FA481">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
+    <End Role="DB_RRHH_History" Type="Self.DB_RRHH_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DB_RRHH_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DB_RRHH_History">
+        <PropertyRef Name="User_Update" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DB_RRHH_H__User___6383C8BA">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
+    <End Role="DB_RRHH_History" Type="Self.DB_RRHH_History" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DB_RRHH_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DB_RRHH_History">
+        <PropertyRef Name="User_Create" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Direction__ID_Us__5EBF139D">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="1" />
+    <End Role="Direction" Type="Self.Direction" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="DB_RRHH_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Direction">
+        <PropertyRef Name="ID_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_RRHH_EmployeeModelStoreContainer">
+    <EntitySet Name="DB_RRHH_Employee" EntityType="Self.DB_RRHH_Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DB_RRHH_History" EntityType="Self.DB_RRHH_History" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Direction" EntityType="Self.Direction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DB_RRHH_H__ID_Us__619B8048" Association="Self.FK__DB_RRHH_H__ID_Us__619B8048">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="DB_RRHH_History" EntitySet="DB_RRHH_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DB_RRHH_H__User___628FA481" Association="Self.FK__DB_RRHH_H__User___628FA481">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="DB_RRHH_History" EntitySet="DB_RRHH_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DB_RRHH_H__User___6383C8BA" Association="Self.FK__DB_RRHH_H__User___6383C8BA">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="DB_RRHH_History" EntitySet="DB_RRHH_History" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Direction__ID_Us__5EBF139D" Association="Self.FK__Direction__ID_Us__5EBF139D">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="Direction" EntitySet="Direction" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

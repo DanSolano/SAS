@@ -1,4 +1,4 @@
-﻿using BitSolutions.Models;
+﻿using BitSolutions.Models.SAS;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -20,7 +20,7 @@ namespace BitSolutions.Controllers
         }
         
         /// <summary>
-        /// 
+        /// Genera una soliciitud de atención
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="uploadFile"></param>
@@ -93,7 +93,7 @@ namespace BitSolutions.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Método intermediario para procesamiento de información de SAS
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="uploadFile"></param>
@@ -109,7 +109,7 @@ namespace BitSolutions.Controllers
 
             if (uploadFile != null)
             {
-                route = LoadFileInDatabase(uploadFile, contentType, ticketGuid);
+                route = LoadFileInServer(uploadFile, contentType, ticketGuid);
             }
 
             result = LoadDataInDatabase(collection, route, ticketGuid, contentType);
@@ -118,7 +118,7 @@ namespace BitSolutions.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Almacena toda la información del SAS en la bd
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="route"></param>
@@ -131,26 +131,25 @@ namespace BitSolutions.Controllers
         {
             DB_RRHH_Employee employee = dbManager.DB_RRHH_Employee.Find(1);
             string description = collection["Description"];
-            string category = collection["Category"];
             string username = Session["username"].ToString();
             DateTime now = DateTime.Now;
 
             ObjectParameter result = new ObjectParameter("result", typeof(string));
 
             if (contentType == "file")
-            {
-                dbManager.spAddTicket(username, now, now, "Active", "High", description, category,"no route", route, now, result);
+            { // 1 => Prioridad alta
+                dbManager.spAddTicket(username, now, now, "Active", "1", description, "","no route", route, now, result);
             }
             else
-            {
-                dbManager.spAddTicket(username, now, now, "Active", "High", description, category, route, "no route", now, result);
+            { // 1 => Prioridad alta
+                dbManager.spAddTicket(username, now, now, "Active", "1", description, "", route, "no route", now, result);
             }
             
             return result.Value.ToString();
         }
 
         /// <summary>
-        /// 
+        /// Carga el archivo en el servidor
         /// </summary>
         /// <param name="uploadFile"></param>
         /// <param name="contentType"></param>
@@ -158,7 +157,7 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        private string LoadFileInDatabase(HttpPostedFileBase uploadFile, string contentType,string ticketGuid)
+        private string LoadFileInServer(HttpPostedFileBase uploadFile, string contentType,string ticketGuid)
         {
             string route = "";
 
@@ -174,65 +173,71 @@ namespace BitSolutions.Controllers
             return route;
         }
 
-
-        //public ActionResult GetInfoTicket(string data = null, string message = null)
-        //{
-        //    ViewBag.TypeForm = data;
-        //    ViewBag.message = message;
-            
-        //    List<Ticket> ticketList = dbManager.Tickets.ToList();
-
-        //    ViewBag.ticketList = ticketList;
-
-        //    return View("~/Views/User/IndexCoordinator.cshtml");
-        //}
-
-
-
-
+        /// <summary>
+        /// Busca los ticket de acuerdo al parámetro ingresado
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public ActionResult ShowRequestForAttention()
+        public ActionResult SearchTicketByParameter(FormCollection collection)
         {
-            return View();
-        }
+            string searchParameter = "";
+            searchParameter = collection["Category"];
 
-        // POST: SAS/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            List<Ticket> ticketList = null;
+            List<Ticket> tempTicketList = null;
+
+            switch (searchParameter)
             {
-                // TODO: Add update logic here
+                case "Fecha":
+                    ticketList = (from ticket in dbManager.Tickets orderby ticket.DateIn descending select ticket).ToList();
+                    break;
+                case "Estado":
+                    ticketList = (from ticket in dbManager.Tickets where ticket.Status != "Closed" orderby ticket.Status ascending select ticket).ToList();
 
-                return RedirectToAction("Index");
+                    tempTicketList = new List<Ticket>();
+                    tempTicketList = (from ticket in dbManager.Tickets where ticket.Status == "Closed" select ticket).ToList();
+
+                    foreach (var item in tempTicketList)
+                    {
+                        ticketList.Add(item);
+                    }
+
+                    break;
+                default: //Prioridad
+                    ticketList = (from ticket in dbManager.Tickets where ticket.Priority != "Low" orderby ticket.Priority ascending select ticket).ToList();
+
+                    tempTicketList = new List<Ticket>();
+                    tempTicketList = (from ticket in dbManager.Tickets  where ticket.Priority == "Low" select ticket).ToList();
+
+                    foreach (var item in tempTicketList)
+                    {
+                        ticketList.Add(item);
+                    }
+                    break;
             }
-            catch
+
+            TempData["ticketList"] = ticketList;
+
+            string role = Session["role_id"].ToString();
+            string roleName = "";
+
+            switch (role)
             {
-                return View();
+                case "1":
+                    roleName = "Coordinator";
+                    break;
+                case "2":
+                    roleName = "Client";
+                    break;
+                case "3":
+                    roleName = "Coordinador Mesa";
+                    break;
+                default:
+                    break;
             }
-        }
 
-        // GET: SAS/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: SAS/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("IndexViewSearchParameterSASCoordinator", "User", new { data = "viewSAS", typeUser = roleName });
         }
     }
 }

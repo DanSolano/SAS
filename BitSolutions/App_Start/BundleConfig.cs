@@ -69,7 +69,7 @@ namespace BitSolutions
                       "~/Scripts/own/template/index.js",
                       "~/Scripts/own/template/controls.js",
                       "~/Scripts/own/datatables/jquery.dataTables.js",
-                      "~/Scripts/own/dataTables/bootstrap.js",
+                      "~/Scripts/own/dataTables/dataTables.bootstrap.js",
                       "~/Scripts/own/dataTables/table_data.js",
                       "~/Scripts/own/main.js",
                       "~/Scripts/own/demo.js"));

@@ -10,30 +10,20 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BitSolutions.Models;
 using System.Collections.Generic;
+using BitSolutions.Models.SAS;
 
 namespace BitSolutions.Controllers
 {
     public class AccountController : Controller
     {
         #region Private Properties
-
         private SAS_2019Entities dbManager;
-
         #endregion
 
-        #region Default Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountController" /> class.
-        /// </summary>
         public AccountController()
         {
             dbManager = new SAS_2019Entities();
         }
-
-        #endregion
-
-        #region Login methods
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -43,6 +33,7 @@ namespace BitSolutions.Controllers
                 // Verification.
                 if (Request.IsAuthenticated)
                 {
+                    return View();
                     // Info.
                     return RedirectToLocal(returnUrl);
                 }
@@ -52,7 +43,12 @@ namespace BitSolutions.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// POST: /Account/LogIn
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -62,7 +58,7 @@ namespace BitSolutions.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var loginInfo =  dbManager.LoginByUsernamePassword(model.UserName, model.Password).ToList();
+                    var loginInfo =  dbManager.spLoginByUsernamePassword(model.UserName, model.Password).ToList();
 
                     // Verification.
                     if (loginInfo != null && loginInfo.Count() > 0)
@@ -88,10 +84,6 @@ namespace BitSolutions.Controllers
             return View(model);
         }
 
-        #endregion
-
-        #region Log Out method.
-
         /// <summary>
         /// POST: /Account/LogOff
         /// </summary>
@@ -114,12 +106,6 @@ namespace BitSolutions.Controllers
             // Info.
             return RedirectToAction("Login", "Account");
         }
-
-        #endregion
-
-        #region Helpers
-
-        #region Sign In method.
 
         /// <summary>
         /// Sign In User method.
@@ -148,10 +134,6 @@ namespace BitSolutions.Controllers
             catch (Exception ex){}
         }
 
-        #endregion
-
-        #region Redirect to local method.
-
         /// <summary>
         /// Redirect to local method.
         /// </summary>
@@ -169,19 +151,10 @@ namespace BitSolutions.Controllers
                     return Redirect(returnUrl);
                 }
             }
-            catch (Exception ex)
-            {
-                // Info
-                throw ex;
-            }
+            catch (Exception ex){}
 
             /*Este redirect se ejecuta cuando */
             return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Management", "Home");
         }
-
-        #endregion
-
-        #endregion
     }
 }

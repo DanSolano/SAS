@@ -1,4 +1,5 @@
 ﻿using BitSolutions.Models;
+using BitSolutions.Models.SAS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace BitSolutions.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Método intermediario que redirecciona a una vista de acuerdo al role del usuario
         /// </summary>
         /// <param name="data"></param>
         /// <param name="message"></param>
@@ -32,49 +33,75 @@ namespace BitSolutions.Controllers
             switch (role)
             {
                 case "1": //Coordinador
-                    return RedirectToAction("IndexSASCoordinator", new { data = data, message = message });
-                    //break;
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "Coordinator" });
                 case "2": //Cliente
-                    return RedirectToAction("IndexClient");
-                    //break;
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "Client" });
+                case "3": //Coordinador Mesa
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
                 default:
-                    break;
+                    return RedirectToAction("");
             }
-
-            return RedirectToAction("");
         }
 
-
         /// <summary>
-        /// 
+        /// Método que carga las vista del usuario Coordinador
         /// </summary>
         /// <param name="data"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexSASCoordinator(string data = "", string message = null)
+        public ActionResult IndexSAS(string data = null, string message = null, string typeUser = "")
         {
+            @ViewBag.typeUser = typeUser;
+
             switch (data)
             {
                 case "addSAS":
-                    return RedirectToAction("IndexAddSASCoordinator", new { data  = data, message = message });
-                case "viewSAS":
-                    return RedirectToAction("IndexViewSASCoordinator", new { data = data, message = message });
+                    switch (typeUser)
+                    {
+                        case "Coordinator":
+                            return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Coordinator" });
+                        case "Client":
+                            return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Client" });
+                        default:
+                            break;
+                    }
+
+                    break;
+                case "viewSAS":    
+                    switch (typeUser)
+                    {
+                        case "Coordinator":
+                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, typeUser = "Coordinator" });
+                        case "HelpDeskCoordinator":
+                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
+                        default:
+                            break;
+                    }
+                    break;
+                case "helpDesk":
+                    if (typeUser == "HelpDeskCoordinator")
+                    {
+                        return RedirectToAction("IndexViewHelpDesk", "HelpDesk", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
+                    }
+                    break;
                 default:
-                    return View("IndexCoordinator");
+                    return View("IndexUser");
             }
+
+            return View("IndexUser");
         }
 
         /// <summary>
-        /// 
+        /// Carga datos en la vista de coordinador de agregar SAS
         /// </summary>
         /// <param name="data"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexAddSASCoordinator(string data = "", string message = null)
+        public ActionResult IndexAddSAS(string data = "", string message = null, string typeUser = "")
         {
             ViewBag.TypeForm = data;
             ViewBag.message = message;
@@ -96,29 +123,101 @@ namespace BitSolutions.Controllers
                 TempData.Keep();
             }
 
-            return View("IndexCoordinator");
+            switch (typeUser)
+            {
+                case "Coordinator":
+                    ViewBag.typeUser = "Coordinator";
+
+                    return View("IndexUser");
+                case "Client":
+                    ViewBag.typeUser = "Client";
+
+                    return View("IndexUser");
+                case "Coordinador Mesa":
+                    ViewBag.typeUser = "Coordinador Mesa";
+
+                    return View("IndexUser");
+                default:
+                    break;
+            }
+
+            return View("");
         }
 
-
         /// <summary>
-        /// 
+        /// Carga las categorias en la vista para filtrar los ticket
         /// </summary>
         /// <param name="data"></param>
         /// <param name="message"></param>
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexViewSASCoordinator(string data = null, string message = null)
+        public ActionResult IndexViewSAS(string data = null, string message = null, string typeUser = "")
         {
             ViewBag.TypeForm = data;
             ViewBag.message = message;
 
-            List<Ticket> ticketList = dbManager.Tickets.ToList();
+            ViewBag.typeUser = typeUser;
+
+            List<Ticket> ticketList = (from ticket in dbManager.Tickets orderby ticket.Priority descending select ticket).ToList();
+
+            List<Category> categoryList = new List<Category>();
+
+            categoryList.Add(new Category() { CategoryData = "Fecha" });
+            categoryList.Add(new Category() { CategoryData = "Estado" });
+            categoryList.Add(new Category() { CategoryData = "Prioridad" });
+
+            //Es usado para asignar datos a dropdownlist
+            SelectList sl = new SelectList(categoryList, "CategoryData", "CategoryData"); //1 Id valor por defecto
+
+            TempData["categoryList"] = sl;
+            TempData.Keep();
 
             ViewBag.ticketList = ticketList;
 
-            return View("IndexCoordinator");
-            //return View("IndexCoordinator");
+            switch (typeUser)
+            {
+                case "Coordinator":
+                    return View("IndexUser");
+                case "Client":
+                    return View("IndexUser");
+                case "Coordinador Mesa":
+                    return View("IndexUser");
+                default:
+                    break;
+            }
+
+            return View("");
+
+            //return RedirectToAction("GetInfoTicket","SAS", new { data = data, message  = message });
+        }
+
+
+
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult IndexViewHelpDesk(string data = null, string message = null, string typeUser = "")
+        {
+            /*****************************************************************************************************************
+             *                                              VALIDACIÓN                                                       *
+             * Validar acceso por URL con sesión ya que a este metodo solo pueden acceder los coordinadores de mesa de ayuda *
+             *                                                                                                               *
+             /****************************************************************************************************************/
+
+
+            ViewBag.TypeForm = data;
+            ViewBag.message = message;
+
+            ViewBag.typeUser = typeUser;
+
+            if (typeUser == "HelpDeskCoordinator")
+            {
+                return View("IndexUser");
+            }
+
+            return View("");
 
             //return RedirectToAction("GetInfoTicket","SAS", new { data = data, message  = message });
         }
@@ -128,70 +227,38 @@ namespace BitSolutions.Controllers
 
 
 
-        // GET: User/Create
-        public ActionResult Create()
+
+
+        /// <summary>
+        /// Método que es accedido desde SASController para cargar los datos de los ticket
+        /// </summary>
+        /// <param name="ticketList"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        public ActionResult IndexViewSearchParameterSASCoordinator(string data = null, string typeUser = "")
         {
-            return View();
+            ViewBag.TypeForm = data;
+
+            List<Ticket> ticketList = (List<Ticket>) TempData["ticketList"];
+            List<Category> categoryList = new List<Category>();
+
+            categoryList.Add(new Category() { CategoryData = "Fecha" });
+            categoryList.Add(new Category() { CategoryData = "Estado" });
+            categoryList.Add(new Category() { CategoryData = "Prioridad" });
+
+            //Es usado para asignar datos a dropdownlist
+            SelectList sl = new SelectList(categoryList, "CategoryData", "CategoryData"); //1 Id valor por defecto
+
+            TempData["categoryList"] = sl;
+            TempData.Keep();
+
+            ViewBag.TypeForm = "viewSAS";
+            ViewBag.typeUser = typeUser;
+            ViewBag.ticketList = ticketList;
+
+            return View("IndexUser");
         }
 
-        // POST: User/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
