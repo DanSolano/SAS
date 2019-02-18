@@ -47,15 +47,10 @@ namespace BitSolutions.Controllers
                 ticketList.Add(new FullTicket(index.ID.ToString(), temp[0].Name, index.Description));
             }
 
-            ViewBag.TypeForm = data;
-            ViewBag.message = ticketList;
-
-            ViewBag.typeUser = typeUser;
-
             if (typeUser == "HelpDeskCoordinator")
             {
-                return RedirectToAction("IndexViewHelpDesk", "User", new { data = "helpDesk", message = ViewBag.message, typeUser = "HelpDeskCoordinator" });
-                return View("~/Views/User/IndexUser.cshtml");
+                Session["ticketList"] = ticketList.ToList();
+                return RedirectToAction("IndexViewHelpDesk", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" });
             }
 
             return View("");

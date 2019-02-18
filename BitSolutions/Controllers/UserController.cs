@@ -58,16 +58,10 @@ namespace BitSolutions.Controllers
             switch (data)
             {
                 case "addSAS":
-                    switch (typeUser)
+                    if (typeUser == "Client")
                     {
-                        case "Coordinator":
-                            return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Coordinator" });
-                        case "Client":
-                            return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Client" });
-                        default:
-                            break;
+                        return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Client" });
                     }
-
                     break;
                 case "viewSAS":    
                     switch (typeUser)
@@ -123,25 +117,9 @@ namespace BitSolutions.Controllers
                 TempData.Keep();
             }
 
-            switch (typeUser)
-            {
-                case "Coordinator":
-                    ViewBag.typeUser = "Coordinator";
+            ViewBag.typeUser = "Client";
 
-                    return View("IndexUser");
-                case "Client":
-                    ViewBag.typeUser = "Client";
-
-                    return View("IndexUser");
-                case "Coordinador Mesa":
-                    ViewBag.typeUser = "Coordinador Mesa";
-
-                    return View("IndexUser");
-                default:
-                    break;
-            }
-
-            return View("");
+            return View("IndexUser");
         }
 
         /// <summary>
@@ -175,27 +153,18 @@ namespace BitSolutions.Controllers
 
             ViewBag.ticketList = ticketList;
 
-            switch (typeUser)
-            {
-                case "Coordinator":
-                    return View("IndexUser");
-                case "Client":
-                    return View("IndexUser");
-                case "Coordinador Mesa":
-                    return View("IndexUser");
-                default:
-                    break;
-            }
-
-            return View("");
+            return View("IndexUser");
 
             //return RedirectToAction("GetInfoTicket","SAS", new { data = data, message  = message });
         }
 
-
-
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="message"></param>
+        /// <param name="typeUser"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult IndexViewHelpDesk(string data = null, string message = null, string typeUser = "")
@@ -206,11 +175,9 @@ namespace BitSolutions.Controllers
              *                                                                                                               *
              /****************************************************************************************************************/
 
-
             ViewBag.TypeForm = data;
-            ViewBag.message = message;
-
             ViewBag.typeUser = typeUser;
+            ViewBag.ticketList = Session["ticketList"];
 
             if (typeUser == "HelpDeskCoordinator")
             {
@@ -221,13 +188,6 @@ namespace BitSolutions.Controllers
 
             //return RedirectToAction("GetInfoTicket","SAS", new { data = data, message  = message });
         }
-
-
-
-
-
-
-
 
         /// <summary>
         /// Método que es accedido desde SASController para cargar los datos de los ticket

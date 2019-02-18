@@ -108,9 +108,6 @@
                                 {
                                     case "Coordinator":
                                         <li>
-                                            @Html.ActionLink("Ingresar solicitud", "IndexSAS", "User", new { data = "addSAS", typeUser = "Coordinator" }, null)
-                                        </li>
-                                        <li>
                                             @Html.ActionLink("Ver solicitud", "IndexSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
                                         </li>
                                         break;
@@ -118,7 +115,6 @@
                                         <li>
                                             @Html.ActionLink("Ingresar solicitud", "IndexSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
                                         </li>
-
                                         break;
                                     case "HelpDeskCoordinator":
                                         <li>
