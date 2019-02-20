@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_ClientModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Belong_To">
+    <Key>
+      <PropertyRef Name="ID_Enterprise" />
+    </Key>
+    <Property Name="ID_Enterprise" Type="int" Nullable="false" />
+    <Property Name="ID_Employee" Type="int" />
+  </EntityType>
+  <EntityType Name="DB_RRHH_Employee">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="identification" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber1" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="PhoneNumber2" Type="nvarchar" MaxLength="45" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="75" Nullable="false" />
+    <Property Name="DateBirth" Type="date" Nullable="false" />
+    <Property Name="DateIn" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Enterprise">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Date_Create" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Belong_To__ID_Em__4E88ABD4">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
+    <End Role="Belong_To" Type="Self.Belong_To" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DB_RRHH_Employee">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Belong_To">
+        <PropertyRef Name="ID_Employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Belong_To__ID_En__4D94879B">
+    <End Role="Enterprise" Type="Self.Enterprise" Multiplicity="1" />
+    <End Role="Belong_To" Type="Self.Belong_To" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Enterprise">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Belong_To">
+        <PropertyRef Name="ID_Enterprise" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spSharedData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="DB_ClientModelStoreContainer">
+    <EntitySet Name="Belong_To" EntityType="Self.Belong_To" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DB_RRHH_Employee" EntityType="Self.DB_RRHH_Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Enterprise" EntityType="Self.Enterprise" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Belong_To__ID_Em__4E88ABD4" Association="Self.FK__Belong_To__ID_Em__4E88ABD4">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="Belong_To" EntitySet="Belong_To" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Belong_To__ID_En__4D94879B" Association="Self.FK__Belong_To__ID_En__4D94879B">
+      <End Role="Enterprise" EntitySet="Enterprise" />
+      <End Role="Belong_To" EntitySet="Belong_To" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
