@@ -2,7 +2,7 @@
 
 @Styles.Render("~/Content/FileInputCss")
 
-@using (Html.BeginForm("CreateSASCoordinator", "SAS", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateSAS", "SAS", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

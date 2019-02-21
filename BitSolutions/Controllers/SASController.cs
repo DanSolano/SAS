@@ -27,7 +27,7 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public ActionResult CreateSASCoordinator(FormCollection collection, HttpPostedFileBase uploadFile)
+        public ActionResult CreateSAS(FormCollection collection, HttpPostedFileBase uploadFile)
         {
             try
             {

@@ -220,5 +220,40 @@ namespace BitSolutions.Controllers
             return View("IndexUser");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ticketCode"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        public ActionResult ShowCoordinatorList(string ticketCode = null)
+        {
+            List<DB_RRHH_Employee> coordinatorList = (from coordinador in dbManager.DB_RRHH_Employee where coordinador.Status == "Active"
+                                       select coordinador).ToList();
+
+            ViewBag.TypeForm = "assignTicket";
+            ViewBag.typeUser = "HelpDeskCoordinator";
+            ViewBag.coordinatorList = coordinatorList;
+            ViewBag.ticketCode = ticketCode;
+
+            return View("IndexUser");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AssignSASToCoordinator(string identification = null, string ticketCode = null)
+        {
+
+
+            ViewBag.TypeForm = "assignTicket";
+            ViewBag.typeUser = "HelpDeskCoordinator";
+            //ViewBag.coordinatorList = coordinatorList;
+            ViewBag.ticketCode = ticketCode;
+
+            return View("IndexUser");
+        }
+       
+
     }
 }

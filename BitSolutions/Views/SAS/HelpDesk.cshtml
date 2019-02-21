@@ -38,7 +38,7 @@
                         }, new { @class = "form-control"})
                     </td>
                     <td>
-                        @Html.ActionLink("Asing to coordinator","ActionName","Controller", new { }, new { @class = "btn btn-info"})
+                        @Html.ActionLink("Asing to coordinator", "ShowCoordinatorList", "User", new { ticketCode = index.ticketCode }, new { @class = "btn btn-info"})
                     </td>
                 </tr>
             }

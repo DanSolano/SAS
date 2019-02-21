@@ -436,11 +436,11 @@
     <Content Include="Views\User\IndexUser.cshtml" />
     <Content Include="Views\User\MainSAS.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\SAS\CreateSASCoordinator.cshtml" />
     <Content Include="Views\SAS\ViewSASCoordinator.cshtml" />
     <Content Include="Views\SAS\CreateSASClient.cshtml" />
     <Content Include="Views\SAS\ViewSASClient.cshtml" />
     <Content Include="Views\SAS\HelpDesk.cshtml" />
+    <Content Include="Views\SAS\AssignTicketToCoordinator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
