@@ -1,0 +1,87 @@
+﻿
+@model BitSolutions.Models.SAS.Ticket
+
+@Styles.Render("~/Content/FileInputCss")
+
+@ViewBag.userType
+
+<div class="col-md-12">
+    <div class="panel panel-danger">
+
+        <div class="panel-body">
+            @using (Html.BeginForm("SearchTicketByParameter", "SAS", FormMethod.Post))
+            {
+                <div class="form">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">Filtros</label>
+                            @Html.DropDownList("Category", TempData["categoryList"] as SelectList, htmlAttributes: new { @class = "selectize" })
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="control-label" style="color:transparent">*****</label><br /> <!-- Usado para acomodar el botón de buscar-->
+                            <button class="btn btn-info" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+       
+        <div class="panel-body">
+            <div class="template__table_static template__table_responsive">
+                <div class="scrollable scrollbar-macosx">
+                    <table id="" class="table table_sortable" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Número de solicitud</th>
+                                <th>Fecha de creación</th>
+                                <th>Fecha de cierre</th>
+                                <th>Estado</th>
+                                <th>Prioridad</th>
+                                <th>Categoría</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Número de solicitud</th>
+                                <th>Fecha de creación</th>
+                                <th>Fecha de cierre</th>
+                                <th>Estado</th>
+                                <th>Prioridad</th>
+                                <th>Categoría</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var item in ViewBag.ticketList as List<BitSolutions.Models.SAS.Ticket>)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateIn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateOut)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Priority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/Content/FileInputJS")

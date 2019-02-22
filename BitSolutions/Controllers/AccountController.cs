@@ -11,6 +11,9 @@ using Microsoft.Owin.Security;
 using BitSolutions.Models;
 using System.Collections.Generic;
 using BitSolutions.Models.SAS;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BitSolutions.Controllers
 {
@@ -52,13 +55,14 @@ namespace BitSolutions.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(DB_RRHH_Employee model, string returnUrl)
+        public ActionResult Login(Models.RRHHEmployee.DB_RRHH_Employee model, string returnUrl)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var loginInfo =  dbManager.spLoginByUsernamePassword(model.UserName, model.Password).ToList();
+                    string encryptPass = Convert.ToString(PassEncrypt(model.Password, "keyPass@0"));
+                    var loginInfo =  dbManager.spLoginByUsernamePassword(model.UserName, encryptPass).ToList();
 
                     // Verification.
                     if (loginInfo != null && loginInfo.Count() > 0)
@@ -156,5 +160,63 @@ namespace BitSolutions.Controllers
             /*Este redirect se ejecuta cuando */
             return RedirectToAction("Index", "Home");
         }
+
+        
+    #region cypher
+
+    public static string PassEncrypt(string noEncryptPass, string key)
+    {
+     
+        //Get the Bytes of the password typed
+        var bytesToEncrypt = Encoding.UTF8.GetBytes(noEncryptPass);
+        var keyBytes = Encoding.UTF8.GetBytes(key);
+
+            //Hash the key with SHA512
+            keyBytes = SHA512.Create().ComputeHash(keyBytes);
+
+
+        var bytesEncrypted = AccountController.Encrypt(bytesToEncrypt, keyBytes);
+
+        return Convert.ToBase64String(bytesEncrypted);
+
+    }
+
+    private static byte[] Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
+    {
+        byte[] encryptedBytes = null;
+
+        // Set your salt here, change it to meet your flavor:
+        // The salt bytes must be at least 8 bytes.
+        var saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+        using (MemoryStream ms = new MemoryStream())
+        {
+            using (RijndaelManaged AES = new RijndaelManaged())
+            {
+                var key = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 1000);
+
+                AES.KeySize = 256;
+                AES.BlockSize = 128;
+                AES.Key = key.GetBytes(AES.KeySize / 8);
+                AES.IV = key.GetBytes(AES.BlockSize / 8);
+
+                AES.Mode = CipherMode.CBC;
+
+                using (var cs = new CryptoStream(ms, AES.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    cs.Write(bytesToBeEncrypted, 0, bytesToBeEncrypted.Length);
+                    cs.Close();
+                }
+
+                encryptedBytes = ms.ToArray();
+            }
+        }
+
+        return encryptedBytes;
+    }
+
+    #endregion
+
+
     }
 }

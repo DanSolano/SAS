@@ -26,18 +26,18 @@ namespace BitSolutions.Controllers
         /// <param name="message"></param>
         /// <returns></returns>
         [Authorize]
-        public ActionResult Intermediary(string data = null , string message = null)
+        public ActionResult Intermediary(string data = null , string message = null, string messageType = null)
         {
             string role = Session["role_id"].ToString();
 
             switch (role)
             {
                 case "1": //Coordinador
-                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "Coordinator" });
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, messageType = messageType , typeUser = "Coordinator" });
                 case "2": //Cliente
-                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "Client" });
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, messageType = messageType , typeUser = "Client" });
                 case "3": //Coordinador Mesa
-                    return RedirectToAction("IndexSAS", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
+                    return RedirectToAction("IndexSAS", new { data = data, message = message, messageType = messageType , typeUser = "HelpDeskCoordinator" });
                 default:
                     return RedirectToAction("");
             }
@@ -51,7 +51,7 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexSAS(string data = null, string message = null, string typeUser = "")
+        public ActionResult IndexSAS(string data = null, string message = null, string messageType = null, string typeUser = "")
         {
             @ViewBag.typeUser = typeUser;
 
@@ -60,16 +60,16 @@ namespace BitSolutions.Controllers
                 case "addSAS":
                     if (typeUser == "Client")
                     {
-                        return RedirectToAction("IndexAddSAS", new { data = data, message = message, typeUser = "Client" });
+                        return RedirectToAction("IndexAddSAS", new { data = data, message = message, messageType = messageType, typeUser = "Client" });
                     }
                     break;
                 case "viewSAS":    
                     switch (typeUser)
                     {
                         case "Coordinator":
-                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, typeUser = "Coordinator" });
+                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, messageType = messageType, typeUser = "Coordinator" });
                         case "HelpDeskCoordinator":
-                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
+                            return RedirectToAction("IndexViewSAS", new { data = data, message = message, messageType = messageType, typeUser = "HelpDeskCoordinator" });
                         default:
                             break;
                     }
@@ -77,7 +77,7 @@ namespace BitSolutions.Controllers
                 case "helpDesk":
                     if (typeUser == "HelpDeskCoordinator")
                     {
-                        return RedirectToAction("IndexViewHelpDesk", "HelpDesk", new { data = data, message = message, typeUser = "HelpDeskCoordinator" });
+                        return RedirectToAction("IndexViewHelpDesk", "HelpDesk", new { data = data, message = message, messageType = messageType, typeUser = "HelpDeskCoordinator" });
                     }
                     break;
                 default:
@@ -95,10 +95,11 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexAddSAS(string data = "", string message = null, string typeUser = "")
+        public ActionResult IndexAddSAS(string data = "", string message = null, string messageType = null, string typeUser = "")
         {
             ViewBag.TypeForm = data;
             ViewBag.message = message;
+            ViewBag.messageType = messageType;
 
             if (data == "addSAS")
             {
@@ -117,7 +118,7 @@ namespace BitSolutions.Controllers
                 TempData.Keep();
             }
 
-            ViewBag.typeUser = "Client";
+            ViewBag.typeUser = typeUser;
 
             return View("IndexUser");
         }
@@ -130,11 +131,11 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexViewSAS(string data = null, string message = null, string typeUser = "")
+        public ActionResult IndexViewSAS(string data = null, string message = null, string messageType = null, string typeUser = "")
         {
             ViewBag.TypeForm = data;
             ViewBag.message = message;
-
+            ViewBag.messageType = messageType;
             ViewBag.typeUser = typeUser;
 
             List<Ticket> ticketList = (from ticket in dbManager.Tickets orderby ticket.Priority descending select ticket).ToList();
@@ -167,7 +168,7 @@ namespace BitSolutions.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public ActionResult IndexViewHelpDesk(string data = null, string message = null, string typeUser = "")
+        public ActionResult IndexViewHelpDesk(string data = null, string message = null, string messageType = null, string typeUser = "")
         {
             /*****************************************************************************************************************
              *                                              VALIDACIÓN                                                       *
@@ -177,6 +178,7 @@ namespace BitSolutions.Controllers
 
             ViewBag.TypeForm = data;
             ViewBag.typeUser = typeUser;
+            ViewBag.messageType = messageType;
             ViewBag.ticketList = Session["ticketList"];
 
             if (typeUser == "HelpDeskCoordinator")
@@ -226,15 +228,20 @@ namespace BitSolutions.Controllers
         /// <param name="ticketCode"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet]
+        [HttpPost]
         public ActionResult ShowCoordinatorList(string ticketCode = null)
         {
-            List<DB_RRHH_Employee> coordinatorList = (from coordinador in dbManager.DB_RRHH_Employee where coordinador.Status == "Active"
-                                       select coordinador).ToList();
+            List<DB_RRHH_Employee> CoordinatorList = (from coordinator in dbManager.DB_RRHH_Employee
+                                                      join userRole in dbManager.User_Rol on coordinator.ID 
+                                                      equals userRole.ID_Employee
+                                                      join rol in dbManager.Rols on userRole.ID_Rol equals rol.ID_Rol
+                                                      where rol.Name_Rol == "Coordinator" & coordinator.Status == "Active"
+                                                      select coordinator).ToList();
+           
 
             ViewBag.TypeForm = "assignTicket";
             ViewBag.typeUser = "HelpDeskCoordinator";
-            ViewBag.coordinatorList = coordinatorList;
+            ViewBag.coordinatorList = CoordinatorList;
             ViewBag.ticketCode = ticketCode;
 
             return View("IndexUser");

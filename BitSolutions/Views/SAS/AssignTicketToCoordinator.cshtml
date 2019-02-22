@@ -9,6 +9,7 @@
                 <th>Last name</th>
                 <th>Email</th>
                 <th>Status</th>
+                @*<th>Functions</th>*@
                 <th>Asing</th>
             </tr>
         </thead>
@@ -19,11 +20,12 @@
                 <th>Last name</th>
                 <th>Email</th>
                 <th>Status</th>
+                @*<th>Functions</th>*@
                 <th>Asing</th>
             </tr>
         </tfoot>
         <tbody>
-            @foreach (var index in ViewBag.coordinatorList as List<BitSolutions.Models.RRHHEmployee.DB_RRHH_Employee>)
+            @foreach (var index in ViewBag.coordinatorList as List<BitSolutions.Models.SAS.DB_RRHH_Employee>)
             {
             <tr>
                 <td>@index.identification</td>
@@ -31,6 +33,9 @@
                 <td>@index.LastName</td>
                 <td>@index.Email</td>
                 <td>@index.Status</td>
+                @*<td>
+                    @Html.ActionLink("View Functions", "ShowFunctionsFromCoordinator", "User", new { identification = index.identification, ticketCode = ViewBag.ticketCode }, new { @class = "btn btn-info" })
+                </td>*@
                 <td>
                     @Html.ActionLink("Asing", "AssignSASToCoordinator", "User", new { identification = index.identification, ticketCode = ViewBag.ticketCode }, new { @class = "btn btn-info" })
                 </td>

@@ -35,53 +35,70 @@ namespace BitSolutions.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (uploadFile != null)
+                    if (collection["Description"] == "")
                     {
-                        switch (uploadFile.ContentType)
-                        {
-                            case "text/plain": // Txt
-                                resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "file");
-                                break;
-                            case "application/msword": // Microsoft Word
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "file");
-                                break;
-                            case "application/pdf": // (PDF)
-                                intermediaryLoadDataInDatabase(collection, uploadFile, "file");
-                                break;
-                            case "application/vnd.ms-powerpoint": // Microsoft PowerPoint
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "file");
-                                break;
-                            case "application/vnd.ms-excel": // Microsoft Excel
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "file");
-                                break;
-                            case "image/x-icon": // Formato Icon
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "image");
-                                break;
-                            case "image/jpeg": // JPEG
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "image");
-                                break;
-                            case "image/svg+xml": // Gráficos Vectoriales (SVG)
-                                resultOp =  intermediaryLoadDataInDatabase(collection, uploadFile, "image");
-                                break;
-                            case "image/webp": //Imágenes WEBP
-                                resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
-                                break;
-                            case "image/png": //Imágenes PNG
-                                resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
-                                break;
-                            default: //Formato de imagen no permitido
-                                resultOp = "Error !! Formato de imagen no válido";
-                                break;
-                        }
+                        ViewBag.message = "Description is required.";
+                        ViewBag.messageType = "Warning";
+
+                        return RedirectToAction("Intermediary", "User", new { data = "addSAS", message = ViewBag.message, messageType = ViewBag.messageType });
                     }
                     else
                     {
-                        resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "");
-                    }
+                        if (uploadFile != null)
+                        {
+                            switch (uploadFile.ContentType)
+                            {
+                                case "text/plain": // Txt
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "file");
+                                    break;
+                                case "application/msword": // Microsoft Word
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "file");
+                                    break;
+                                case "application/pdf": // (PDF)
+                                    intermediaryLoadDataInDatabase(collection, uploadFile, "file");
+                                    break;
+                                case "application/vnd.ms-powerpoint": // Microsoft PowerPoint
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "file");
+                                    break;
+                                case "application/vnd.ms-excel": // Microsoft Excel
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "file");
+                                    break;
+                                case "image/x-icon": // Formato Icon
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
+                                    break;
+                                case "image/jpeg": // JPEG
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
+                                    break;
+                                case "image/svg+xml": // Gráficos Vectoriales (SVG)
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
+                                    break;
+                                case "image/webp": //Imágenes WEBP
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
+                                    break;
+                                case "image/png": //Imágenes PNG
+                                    resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "image");
+                                    break;
+                                default: //Formato de imagen no permitido
+                                    resultOp = "Error !! Formato de imagen no válido";
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            resultOp = intermediaryLoadDataInDatabase(collection, uploadFile, "");
+                        }
 
-                    ViewBag.message = resultOp;
+                        if (resultOp != "Operación realizada con éxito")
+                        {
+                            return RedirectToAction("Intermediary", "User", new { data = "addSAS", message = resultOp, messageType = "Error" });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Intermediary", "User", new { data = "addSAS", message = resultOp, messageType = "Success" });
+                        }
 
-                    return RedirectToAction("Intermediary", "User", new { data = "addSAS", message = ViewBag.message });
+                        
+                    }   
                 }
 
                 return View();
@@ -231,7 +248,7 @@ namespace BitSolutions.Controllers
                     roleName = "Client";
                     break;
                 case "3":
-                    roleName = "Coordinador Mesa";
+                    roleName = "HelpDeskCoordinator";
                     break;
                 default:
                     break;

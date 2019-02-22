@@ -11,7 +11,8 @@ namespace BitSolutions.Models.SAS
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Ticket
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,6 +30,8 @@ namespace BitSolutions.Models.SAS
         public System.DateTime DateOut { get; set; }
         public string Status { get; set; }
         public string Priority { get; set; }
+
+        [Required (ErrorMessage = "Description is required")]
         public string Description { get; set; }
         public string Category { get; set; }
     

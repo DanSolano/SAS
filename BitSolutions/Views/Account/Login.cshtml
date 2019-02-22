@@ -12,7 +12,7 @@
 
 
         <div class="form-group">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Login" } })
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Login", autocomplete = "off" } })
             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
         </div>
 
@@ -34,6 +34,6 @@
 @*@Html.Partial("~/Views/Themes/Theme.cshtml");*@
 
 @section Scripts {
-    @Scripts.Render("~/bundles/LoginJs")
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/LoginJs.js")
+    @Scripts.Render("~/bundles/jqueryval.js")
 }
