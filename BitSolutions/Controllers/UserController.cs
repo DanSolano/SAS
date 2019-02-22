@@ -77,7 +77,7 @@ namespace BitSolutions.Controllers
                 case "helpDesk":
                     if (typeUser == "HelpDeskCoordinator")
                     {
-                        return RedirectToAction("IndexViewHelpDesk", "HelpDesk", new { data = data, message = message, messageType = messageType, typeUser = "HelpDeskCoordinator" });
+                        return RedirectToAction("IndexViewHelpDesk", "HelpDesk", new { typeUser = "HelpDeskCoordinator" });
                     }
                     break;
                 default:
@@ -228,7 +228,7 @@ namespace BitSolutions.Controllers
         /// <param name="ticketCode"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public ActionResult ShowCoordinatorList(string ticketCode = null)
         {
             List<DB_RRHH_Employee> CoordinatorList = (from coordinator in dbManager.DB_RRHH_Employee
@@ -249,16 +249,52 @@ namespace BitSolutions.Controllers
 
         [Authorize]
         [HttpGet]
-        public ActionResult AssignSASToCoordinator(string identification = null, string ticketCode = null)
+        public ActionResult AssignSASToCoordinator(string identificationEmployee = null, string ticketCode = null)
         {
+            return RedirectToAction("IndexViewFilterHelpDesk", "HelpDesk", new { typeUser = "HelpDeskCoordinator" });
 
+            int ticketCodeValue = Int32.Parse(ticketCode);
 
-            ViewBag.TypeForm = "assignTicket";
-            ViewBag.typeUser = "HelpDeskCoordinator";
-            //ViewBag.coordinatorList = coordinatorList;
-            ViewBag.ticketCode = ticketCode;
+            //Información del cliente que tiene asociado el ticket
+            List<DB_Client> ticketClient = (from ticket in dbManager.Tickets join cli in dbManager.DB_Client on ticket.ID_Client equals cli.ID where ticket.ID == ticketCodeValue select cli).ToList();
+
+            //Información del empleado de acuerdo al número de cédula
+            List<DB_RRHH_Employee> employee = (from emp in dbManager.DB_RRHH_Employee where emp.identification == identificationEmployee select emp).ToList();
+
+            try
+            {
+                Employee_Ticket tmpEmployee = new Employee_Ticket();
+                tmpEmployee.ID_Employee = employee[0].ID;
+                tmpEmployee.ID_Ticket = Int32.Parse(ticketCode);
+                tmpEmployee.ID_Client = ticketClient[0].ID;
+                tmpEmployee.ID_User_Assign = employee[0].ID;
+
+                dbManager.Employee_Ticket.Add(tmpEmployee);
+                dbManager.SaveChanges();
+
+                return RedirectToAction("IndexViewFilterHelpDesk", "HelpDesk", new { typeUser = "HelpDeskCoordinator" });
+            }
+            catch (Exception ex){}
 
             return View("IndexUser");
+
+
+
+
+            //List<DB_RRHH_Employee> CoordinatorList = (from coordinator in dbManager.DB_RRHH_Employee
+            //                                          join userRole in dbManager.User_Rol on coordinator.ID
+            //                                          equals userRole.ID_Employee
+            //                                          join rol in dbManager.Rols on userRole.ID_Rol equals rol.ID_Rol
+            //                                          where rol.Name_Rol == "Coordinator" & coordinator.Status == "Active"
+            //                                          select coordinator).ToList();
+
+
+            //ViewBag.TypeForm = "assignTicket";
+            //ViewBag.typeUser = "HelpDeskCoordinator";
+            //ViewBag.coordinatorList = CoordinatorList;
+            //ViewBag.ticketCode = ticketCode;
+
+            //return View("IndexUser");
         }
        
 
