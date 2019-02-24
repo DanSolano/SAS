@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\bin\debug</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Datos\SAS</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 17:29:20</publishTime>
     </File>
     <File Include="bin/BitSolutions.dll">
-      <publishTime>02/23/2019 18:06:58</publishTime>
+      <publishTime>02/23/2019 19:46:02</publishTime>
     </File>
     <File Include="bin/BitSolutions.pdb">
-      <publishTime>02/23/2019 18:06:58</publishTime>
+      <publishTime>02/23/2019 19:46:02</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 14:15:18</publishTime>
@@ -484,7 +484,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/22/2019 00:08:28</publishTime>
     </File>
     <File Include="Views/SAS/AssignTicketToCoordinator.cshtml">
-      <publishTime>02/22/2019 02:05:16</publishTime>
+      <publishTime>02/23/2019 18:56:57</publishTime>
     </File>
     <File Include="Views/SAS/CreateSASClient.cshtml">
       <publishTime>02/21/2019 22:19:46</publishTime>
@@ -499,13 +499,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/18/2019 13:24:39</publishTime>
     </File>
     <File Include="Views/SAS/ViewSASCoordinator.cshtml">
-      <publishTime>02/21/2019 23:58:52</publishTime>
+      <publishTime>02/23/2019 19:37:00</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>01/31/2019 19:10:20</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>02/23/2019 17:55:15</publishTime>
+      <publishTime>02/23/2019 19:40:45</publishTime>
     </File>
     <File Include="Views/Themes/Theme.cshtml">
       <publishTime>02/13/2019 21:30:24</publishTime>

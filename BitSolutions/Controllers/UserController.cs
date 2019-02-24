@@ -247,10 +247,43 @@ namespace BitSolutions.Controllers
             return View("IndexUser");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identificationEmployee"></param>
+        /// <param name="ticketCode"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult AssignSASToCoordinator(string identificationEmployee = null, string ticketCode = null)
         {
+            List<Ticket> ticketList = (from ticket in dbManager.Tickets select ticket).ToList();
+
+            //List<Ticket> ticketsListOfAssociatedWithUser = (from ticket in dbManager.Tickets
+            //                                                join employeeTicket in dbManager.Employee_Ticket on ticket.ID 
+            //                                                equals employeeTicket.ID_Ticket);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return RedirectToAction("IndexViewFilterHelpDesk", "HelpDesk", new { typeUser = "HelpDeskCoordinator" });
 
             int ticketCodeValue = Int32.Parse(ticketCode);

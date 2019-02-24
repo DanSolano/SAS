@@ -1,44 +1,51 @@
 ﻿@model BitSolutions.Models.RRHHEmployee.DB_RRHH_Employee
 
 <div class="container-fluid half-padding">
-    <div id="buttons"></div><table id="example" class="table datatable display table-hover" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Identification</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Ticket code</th>
-                <th>Asing</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th>Identification</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Ticket code</th>
-                <th>Asing</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            @foreach (var index in ViewBag.coordinatorList as List<BitSolutions.Models.SAS.DB_RRHH_Employee>)
-            {
-                <tr>
-                    <td>@index.identification</td>
-                    <td>@index.FirstName</td>
-                    <td>@index.LastName</td>
-                    <td>@index.Email</td>
-                    <td>@index.Status</td>
-                    <td>@ViewBag.ticketCode</td>
-                    <td>
-                        @Html.ActionLink("Assig to coordinator", "AssignSASToCoordinator", "User", new { identificationEmployee = index.identification, ticketCode = ViewBag.ticketCode }, new { @class = "btn btn-info" })
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div id="buttons"></div>
+    <div class="panel-body">
+        <div class="template__table_static template__table_responsive">
+            <div class="scrollable scrollbar-macosx">
+                <table id="example" class="table datatable display table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Identification</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Ticket code</th>
+                            <th>Asing</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Identification</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Ticket code</th>
+                            <th>Asing</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var index in ViewBag.coordinatorList as List<BitSolutions.Models.SAS.DB_RRHH_Employee>)
+                        {
+                            <tr>
+                                <td>@index.identification</td>
+                                <td>@index.FirstName</td>
+                                <td>@index.LastName</td>
+                                <td>@index.Email</td>
+                                <td>@index.Status</td>
+                                <td>@ViewBag.ticketCode</td>
+                                <td>
+                                    @Html.ActionLink("Assig to coordinator", "AssignSASToCoordinator", "User", new { identificationEmployee = index.identification, ticketCode = ViewBag.ticketCode }, new { @class = "btn btn-info" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
