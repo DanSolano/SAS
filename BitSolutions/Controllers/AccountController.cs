@@ -14,6 +14,7 @@ using BitSolutions.Models.SAS;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 
 namespace BitSolutions.Controllers
 {
@@ -57,11 +58,23 @@ namespace BitSolutions.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(Models.RRHHEmployee.DB_RRHH_Employee model, string returnUrl)
         {
+            string password = "";
+            string path = "";
             try
             {
                 if (ModelState.IsValid)
                 {
-                    string encryptPass = Convert.ToString(PassEncrypt(model.Password, "keyPass@0"));
+                    XmlDocument doc = new XmlDocument();
+
+                    path = Server.MapPath(".");
+                    doc.Load((path + "\\Configurations\\EncriptConf.xml"));
+
+                    foreach (XmlNode node in doc.DocumentElement.ChildNodes)
+                    {
+                        password = node.InnerText.Trim(); //
+                    }
+
+                    string encryptPass = Convert.ToString(PassEncrypt(model.Password, password));
                     var loginInfo =  dbManager.spLoginByUsernamePassword(model.UserName, encryptPass).ToList();
 
                     // Verification.
@@ -104,6 +117,11 @@ namespace BitSolutions.Controllers
 
                 // Sign Out.
                 authenticationManager.SignOut();
+
+                //Se eliminan algunas sesiones
+                Session["role_id"] = null;
+                Session["ticketList"] = null;
+                Session["username"] = null;
             }
             catch (Exception ex){}
 

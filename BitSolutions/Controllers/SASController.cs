@@ -109,6 +109,11 @@ namespace BitSolutions.Controllers
             }
         }
 
+        //private bool sendEmailToUser()
+        //{
+
+        //}
+
         /// <summary>
         /// Método intermediario para procesamiento de información de SAS
         /// </summary>

@@ -257,41 +257,13 @@ namespace BitSolutions.Controllers
         [HttpGet]
         public ActionResult AssignSASToCoordinator(string identificationEmployee = null, string ticketCode = null)
         {
-            List<Ticket> ticketList = (from ticket in dbManager.Tickets select ticket).ToList();
-
-            //List<Ticket> ticketsListOfAssociatedWithUser = (from ticket in dbManager.Tickets
-            //                                                join employeeTicket in dbManager.Employee_Ticket on ticket.ID 
-            //                                                equals employeeTicket.ID_Ticket);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            return RedirectToAction("IndexViewFilterHelpDesk", "HelpDesk", new { typeUser = "HelpDeskCoordinator" });
+            string p = "";
 
             int ticketCodeValue = Int32.Parse(ticketCode);
 
-            //Información del cliente que tiene asociado el ticket
-            List<DB_Client> ticketClient = (from ticket in dbManager.Tickets join cli in dbManager.DB_Client on ticket.ID_Client equals cli.ID where ticket.ID == ticketCodeValue select cli).ToList();
+            List<DB_Client> ticketClient = (from ticket in dbManager.Tickets join cli in dbManager.DB_Client 
+                                            on ticket.ID_Client equals cli.ID where ticket.ID == ticketCodeValue select cli).ToList();
 
-            //Información del empleado de acuerdo al número de cédula
             List<DB_RRHH_Employee> employee = (from emp in dbManager.DB_RRHH_Employee where emp.identification == identificationEmployee select emp).ToList();
 
             try
@@ -310,26 +282,6 @@ namespace BitSolutions.Controllers
             catch (Exception ex){}
 
             return View("IndexUser");
-
-
-
-
-            //List<DB_RRHH_Employee> CoordinatorList = (from coordinator in dbManager.DB_RRHH_Employee
-            //                                          join userRole in dbManager.User_Rol on coordinator.ID
-            //                                          equals userRole.ID_Employee
-            //                                          join rol in dbManager.Rols on userRole.ID_Rol equals rol.ID_Rol
-            //                                          where rol.Name_Rol == "Coordinator" & coordinator.Status == "Active"
-            //                                          select coordinator).ToList();
-
-
-            //ViewBag.TypeForm = "assignTicket";
-            //ViewBag.typeUser = "HelpDeskCoordinator";
-            //ViewBag.coordinatorList = CoordinatorList;
-            //ViewBag.ticketCode = ticketCode;
-
-            //return View("IndexUser");
         }
-       
-
     }
 }

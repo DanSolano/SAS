@@ -39,24 +39,53 @@ namespace BitSolutions.Controllers
              *                                                                                                               *
              /****************************************************************************************************************/
 
-            //Obtiene la lista de los ticket
-            var tempTicketList = (from ticket in dbManagerSAS.Tickets select new { ticket.ID, ticket.ID_Client, ticket.Description }).ToList();
+            List<Ticket> ticketList = (from ticket in dbManagerSAS.Tickets select ticket).ToList();
+
+            List<Ticket> ticketsListOfAssociatedWithUser = (from ticket in dbManagerSAS.Tickets
+                                                            join employeeTicket in dbManagerSAS.Employee_Ticket on ticket.ID
+                                                            equals employeeTicket.ID_Ticket
+                                                            join db_rr_employee in dbManagerSAS.DB_RRHH_Employee
+                                                            on employeeTicket.ID_Employee equals db_rr_employee.ID
+                                                            select ticket).ToList();
+            List<Ticket> freeTicket = new List<Ticket>();
+
+            //Se obtienen los tickets que no han sido asigandos a un usuario
+            foreach (var ticket in ticketList)
+            {
+                bool flag = false;
+
+                foreach (var ticketUser in ticketsListOfAssociatedWithUser)
+                {
+                    if (ticket.ID == ticketUser.ID)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag)
+                {
+                    freeTicket.Add(ticket);
+                }
+            }
 
             //Obtiene la lista de clientes
-            var tempClient = (from rrhhEmployee in dbManagerEntities.DB_RRHH_Employee join blnt in dbManagerEntities.Belong_To on rrhhEmployee.ID equals blnt.ID_Employee join ent in dbManagerEntities.Enterprises on blnt.ID_Enterprise equals ent.ID select new { rrhhEmployee.ID, ent.Name }).ToList();
+            var tempClient = (from rrhhEmployee in dbManagerEntities.DB_RRHH_Employee join blnt in dbManagerEntities.Belong_To 
+                              on rrhhEmployee.ID equals blnt.ID_Employee join ent in dbManagerEntities.Enterprises 
+                              on blnt.ID_Enterprise equals ent.ID select new { rrhhEmployee.ID, ent.Name }).ToList();
 
-            List<FullTicket> ticketList = new List<FullTicket>();
+            List<FullTicket> fullTicketList = new List<FullTicket>();
 
-            foreach (var index in tempTicketList)
+            foreach (var index in freeTicket)
             {
                 var temp = tempClient.Where(x => x.ID == index.ID_Client).ToList();
 
-                ticketList.Add(new FullTicket(index.ID.ToString(), temp[0].Name, index.Description));
+                fullTicketList.Add(new FullTicket(index.ID.ToString(), temp[0].Name, index.Description));
             }
 
             if (typeUser == "HelpDeskCoordinator")
             {
-                Session["ticketList"] = ticketList.ToList();
+                Session["ticketList"] = fullTicketList.ToList();
                 return RedirectToAction("IndexViewHelpDesk", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" });
             }
 
@@ -82,6 +111,36 @@ namespace BitSolutions.Controllers
              *                                                                                                               *
              /****************************************************************************************************************/
 
+            List<Ticket> ticketList = (from ticket in dbManagerSAS.Tickets select ticket).ToList();
+
+            List<Ticket> ticketsListOfAssociatedWithUser = (from ticket in dbManagerSAS.Tickets
+                                                            join employeeTicket in dbManagerSAS.Employee_Ticket on ticket.ID
+                                                            equals employeeTicket.ID_Ticket
+                                                            join db_rr_employee in dbManagerSAS.DB_RRHH_Employee
+                                                            on employeeTicket.ID_Employee equals db_rr_employee.ID
+                                                            select ticket).ToList();
+            List<Ticket> freeTicket = new List<Ticket>();
+
+            //Se obtienen los tickets que no han sido asigandos a un usuario
+            foreach (var ticket in ticketList)
+            {
+                bool flag = false;
+
+                foreach (var ticketUser in ticketsListOfAssociatedWithUser)
+                {
+                    if (ticket.ID == ticketUser.ID)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+
+                if (!flag)
+                {
+                    freeTicket.Add(ticket);
+                }
+            }
+
 
             //Obtiene la lista de clientes
             var tempClient = (from rrhhEmployee in dbManagerEntities.DB_RRHH_Employee join blnt in dbManagerEntities.Belong_To on rrhhEmployee.ID equals blnt.ID_Employee join ent in dbManagerEntities.Enterprises on blnt.ID_Enterprise equals ent.ID select new { rrhhEmployee.ID, ent.Name }).ToList();
@@ -92,26 +151,26 @@ namespace BitSolutions.Controllers
             //Obtiene la lista de los Employee_ticket
             List<Employee_Ticket> employeeTicketList = (from employeeTicket in dbManagerSAS.Employee_Ticket select employeeTicket).ToList();
 
-            //Obtiene la tickets
-            List<Ticket> allTicketList = (from ticket in dbManagerSAS.Tickets select ticket).ToList();
-
-
-            foreach (var tick in allTicketList)
+            foreach (var tick in freeTicket)
             {
+                bool flag = false;
+
                 foreach (var empl in employeeTicketList)
                 {
-                    if (tick.ID != empl.ID_Ticket)
+                    if (tick.ID == empl.ID_Ticket)
                     {
-                        var temp = tempClient.Where(x => x.ID == tick.ID_Client).ToList();
-
-                        filterTicketList.Add(new FullTicket(tick.ID.ToString(), temp[0].Name, tick.Description));
+                        flag = true;
+                        break;
                     }
                 }
 
-                
+                if (!flag)
+                {
+                    var temp = tempClient.Where(x => x.ID == tick.ID_Client).ToList();
+
+                    filterTicketList.Add(new FullTicket(tick.ID.ToString(), temp[0].Name, tick.Description));
+                }
             }
-
-
 
             if (typeUser == "HelpDeskCoordinator")
             {
