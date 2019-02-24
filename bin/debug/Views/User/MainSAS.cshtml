@@ -1,0 +1,248 @@
+﻿@model BitSolutions.Models.SAS.Ticket
+
+
+@*@ViewBag.TypeForm*@
+
+@* De acuerdo al dato que tiene viewbag se mostrará la vista requerida *@
+
+<div class="main">
+    <div class="main__scroll scrollbar-macosx">
+        <div class="main__cont">
+            <div class="main-heading">
+                <div class="main-title">
+
+                    @if (@ViewBag.TypeForm != null)
+                    {
+                        switch (@ViewBag.TypeForm)
+                        {
+                            case "addSAS":
+                                <ol class="breadcrumb">
+                                    @if (@ViewBag.typeUser != null)
+                                    {
+                                        if (@ViewBag.typeUser == "Client")
+                                        {
+                                            <li>
+                                                @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Client" }, null)
+                                            </li>
+                                            <li class="active">
+                                                @Html.ActionLink("Add request for attention", "IndexAddSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
+                                            </li>
+                                        }
+                                    }
+
+                                </ol>
+                                break;
+                            case "viewSAS":
+                                <ol class="breadcrumb">
+                                    @if (@ViewBag.typeUser != null)
+                                    {
+                                        switch (@ViewBag.typeUser)
+                                        {
+                                            case "Coordinator":
+                                                <li>
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
+                                                </li>
+                                                <li class="active">
+                                                    @Html.ActionLink("See request for attention", "IndexViewSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
+                                                </li>
+                                                break;
+                                            case "HelpDeskCoordinator":
+                                                <li>
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                <li class="active">
+                                                    @Html.ActionLink("See request for attention", "IndexViewSAS", "User", new { data = "viewSAS", typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                break;
+                                        }
+
+                                    }
+
+                                </ol>
+                                break;
+                            case "helpDesk":
+                                <ol class="breadcrumb">
+                                    @if (@ViewBag.typeUser != null)
+                                    {
+                                        switch (@ViewBag.typeUser)
+                                        {
+                                            case "HelpDeskCoordinator":
+                                                <li>
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                <li class="active">
+                                                    @Html.ActionLink("Help desk", "IndexViewHelpDesk", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                break;
+                                        }
+
+                                    }
+
+                                </ol>
+                                break;
+                            case "assignTicket":
+                                <ol class="breadcrumb">
+                                    @if (@ViewBag.typeUser != null)
+                                    {
+                                        switch (@ViewBag.typeUser)
+                                        {
+                                            case "HelpDeskCoordinator":
+                                                <li>
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                <li class="active">
+                                                    @Html.ActionLink("Assign ticket", "IndexAddSAS", "User", new { data = "viewSAS", typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                break;
+                                        }
+
+                                    }
+
+                                </ol>
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <ol class="breadcrumb">
+                            @if (@ViewBag.typeUser != null)
+                            {
+                                switch (@ViewBag.typeUser)
+                                {
+                                    case "Coordinator":
+                                        <li>
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
+                                        </li>
+                                        break;
+                                    case "Client":
+                                        <li>
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Client" }, null)
+                                        </li>
+                                        break;
+                                    case "HelpDeskCoordinator":
+                                        <li>
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
+                                        </li>
+                                        break;
+
+                                }
+                            }
+
+                        </ol>
+                    }
+                </div>
+                <div class="main-filter">
+                    <form class="main-filter__search">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Search..."><span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <div class="fa fa-search"></div>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @if (@ViewBag.TypeForm != null)
+            {
+                <div class="container-fluid half-padding">
+                    <div class="template template__table_data">
+                        <div class="row">
+                            @switch (@ViewBag.TypeForm)
+                            {
+                                case "addSAS":
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="panel panel-danger">
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">Solicitud de Atención</h3>
+                                                </div>
+                                                <div class="panel-body">
+                                                    @if (@ViewBag.typeUser != null)
+                                                    {
+                                                        if (@ViewBag.typeUser == "Client")
+                                                        {
+                                                            @Html.Partial("~/Views/SAS/CreateSASClient.cshtml", Model)
+                                                        }
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    break;
+
+                                case "viewSAS":
+                                    <div class="col-xs-12">
+                                        <div class="panel panel-danger">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Solicitud de Atención</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                @if (@ViewBag.typeUser != null)
+                                                {
+                                                    switch (@ViewBag.typeUser)
+                                                    {
+                                                        case "Coordinator":
+                                                            @Html.Partial("~/Views/SAS/ViewSASCoordinator.cshtml", Model)
+                                                            break;
+                                                        case "HelpDeskCoordinator":
+                                                            @Html.Partial("~/Views/SAS/ViewSASCoordinator.cshtml", Model)
+                                                            break;
+                                                    }
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    break;
+                                case "helpDesk":
+                                    <div class="col-xs-12">
+                                        <div class="panel panel-danger">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Mesa de ayuda</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                @if (@ViewBag.typeUser != null)
+                                                {
+                                                    if (ViewBag.typeUser == "HelpDeskCoordinator")
+                                                    {
+                                                        @Html.Partial("~/Views/SAS/HelpDesk.cshtml")
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    break;
+                                case "assignTicket":
+                                    <div class="col-xs-12">
+                                        <div class="panel panel-danger">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Mesa de ayuda</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                @if (@ViewBag.typeUser != null)
+                                                {
+                                                    if (ViewBag.typeUser == "HelpDeskCoordinator")
+                                                    {
+                                                        @Html.Partial("~/Views/SAS/AssignTicketToCoordinator.cshtml")
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    break;
+                                default:
+                                    break;
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
