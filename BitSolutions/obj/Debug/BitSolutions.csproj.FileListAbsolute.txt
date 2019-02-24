@@ -974,4 +974,3 @@ C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\obj\Debug\BitSolutions
 C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\obj\Debug\BitSolutions.csproj.CopyComplete
 C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\obj\Debug\BitSolutions.dll
 C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\obj\Debug\BitSolutions.pdb
-C:\Users\Danny\Desktop\OnGithub\BitSolutions\BitSolutions\obj\Debug\BitSolutions.csprojAssemblyReference.cache
