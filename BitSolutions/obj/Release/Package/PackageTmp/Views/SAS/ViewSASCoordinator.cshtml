@@ -14,13 +14,13 @@
                 <div class="form">
                     <div class="form-group">
                         <div class="col-md-4">
-                            <label class="control-label">Filtros</label>
+                            <label class="control-label">Filters</label>
                             @Html.DropDownList("Category", TempData["categoryList"] as SelectList, htmlAttributes: new { @class = "selectize" })
                         </div>
 
                         <div class="col-md-4">
                             <label class="control-label" style="color:transparent">*****</label><br /> <!-- Usado para acomodar el botón de buscar-->
-                            <button class="btn btn-info" type="submit">Buscar</button>
+                            <button class="btn btn-info" type="submit">Search</button>
                         </div>
                     </div>
                 </div>
@@ -33,22 +33,22 @@
                     <table id="" class="table table_sortable" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Número de solicitud</th>
-                                <th>Fecha de creación</th>
-                                <th>Fecha de cierre</th>
-                                <th>Estado</th>
-                                <th>Prioridad</th>
-                                <th>Categoría</th>
+                                <th>Request number</th>
+                                <th>Creation date</th>
+                                <th>Deadline</th>
+                                <th>State</th>
+                                <th>Priority</th>
+                                <th>Category</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Número de solicitud</th>
-                                <th>Fecha de creación</th>
-                                <th>Fecha de cierre</th>
-                                <th>Estado</th>
-                                <th>Prioridad</th>
-                                <th>Categoría</th>
+                                <th>Request number</th>
+                                <th>Creation date</th>
+                                <th>Deadline</th>
+                                <th>State</th>
+                                <th>Priority</th>
+                                <th>Category</th>
                             </tr>
                         </tfoot>
                         <tbody>

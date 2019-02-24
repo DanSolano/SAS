@@ -79,7 +79,7 @@
                             </ul>
                         </li>
                     </ul>*@
-                <div class="sidebar__title">Solicitudes</div>
+                <div class="sidebar__title">Request</div>
                 <ul class="nav nav-menu">
                     @*<li>
                             <a href="#">
@@ -98,7 +98,7 @@
                     <li>
                         <a href="#">
                             <div class="nav-menu__ico"><i class="fa fa-fw fa-clone"></i></div>
-                            <div class="nav-menu__text"><span>Solicitud</span></div>
+                            <div class="nav-menu__text"><span>Request</span></div>
                             <div class="nav-menu__right"><i class="fa fa-fw fa-angle-right arrow"></i></div>
                         </a>
                         <ul class="nav nav-menu__second collapse">
@@ -108,17 +108,20 @@
                                 {
                                     case "Coordinator":
                                         <li>
-                                            @Html.ActionLink("Ver solicitud", "IndexSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
+                                            @Html.ActionLink("Show request", "IndexSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
                                         </li>
                                         break;
                                     case "Client":
                                         <li>
-                                            @Html.ActionLink("Ingresar solicitud", "IndexSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
+                                            @Html.ActionLink("Add request", "IndexSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
                                         </li>
                                         break;
                                     case "HelpDeskCoordinator":
                                         <li>
-                                            @Html.ActionLink("Mesa de ayuda", "IndexSAS", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" }, null)
+                                            @Html.ActionLink("HelpDesk", "IndexSAS", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" }, null)
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Show request", "IndexSAS", "User", new { data = "viewSAS", typeUser = "HelpDeskCoordinator" }, null)
                                         </li>
                                         break;
                                     default:

@@ -1,47 +1,54 @@
 ﻿@model BitSolutions.Models.FullTicket
 
 <div class="container-fluid half-padding">
-    <div id="buttons"></div><table id="example" class="table datatable display table-hover" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Ticket code</th>
-                <th>Enterprice</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Asign to coordinator</th>
-            </tr>
-        </thead>
-        <tfoot>
-            <tr>
-                <th>Ticket code</th>
-                <th>Enterprice</th>
-                <th>Description</th>
-                <th>Priority</th>
-                <th>Asign to coordinator</th>
-            </tr>
-        </tfoot>
-        <tbody>
-            @foreach (var index in ViewBag.ticketList as List<BitSolutions.Models.FullTicket>)
-            {
-                <tr>
-                    <td>@index.ticketCode</td>
-                    <td>@index.enterprice</td>
-                    <td>@index.description</td>
-                    <td>
-                        @Html.CheckBox("Priority",false, new { @class = "form-control"})
-
-                        @Html.DropDownList("priorityList", new List<SelectListItem>
+    <div id="buttons"></div>
+    <div class="panel-body">
+        <div class="template__table_static template__table_responsive">
+            <div class="scrollable scrollbar-macosx">
+                <table id="example" class="table datatable display table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Ticket code</th>
+                            <th>Enterprice</th>
+                            <th>Description</th>
+                            <th>Priority</th>
+                            <th>Asign to coordinator</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Ticket code</th>
+                            <th>Enterprice</th>
+                            <th>Description</th>
+                            <th>Priority</th>
+                            <th>Asign to coordinator</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var index in ViewBag.ticketList as List<BitSolutions.Models.FullTicket>)
                         {
-                            new SelectListItem{ Text="High", Value = "1" },
-                           new SelectListItem{ Text="Medium", Value = "2" },
-                           new SelectListItem{ Text="Low", Value = "3" },
-                        }, new { @class = "form-control"})
-                    </td>
-                    <td>
-                        @Html.ActionLink("Asing to coordinator","ActionName","Controller", new { }, new { @class = "btn btn-info"})
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                            <tr>
+                                <td>@index.ticketCode</td>
+                                <td>@index.enterprice</td>
+                                <td>@index.description</td>
+                                <td>
+                                    @Html.CheckBox("Priority", false, new { @class = "form-control" })
+
+                                    @Html.DropDownList("priorityList", new List<SelectListItem>
+                                    {
+                                        new SelectListItem{ Text="High", Value = "1" },
+                                        new SelectListItem{ Text="Medium", Value = "2" },
+                                        new SelectListItem{ Text="Low", Value = "3" },
+                                    }, new { @class = "form-control" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Asing to coordinator", "ShowCoordinatorList", "User", new { ticketCode = index.ticketCode }, new { @class = "btn btn-info" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

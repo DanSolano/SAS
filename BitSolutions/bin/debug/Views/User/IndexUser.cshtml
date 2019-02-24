@@ -1,0 +1,42 @@
+﻿@model BitSolutions.Models.SAS.Ticket
+
+
+@Styles.Render("~/Content/BaseCss")
+
+@*@ViewBag.TypeForm*@
+
+<nav class="navbar navbar-static-top header-navbar">
+    <div class="header-navbar-mobile">
+        <div class="header-navbar-mobile__menu">
+            <button class="btn" type="button"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="header-navbar-mobile__title"><span>Dashboard</span></div>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <div class="header-navbar-mobile__settings dropdown">
+                <a class="btn dropdown-toggle" href="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-power-off"></i></a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a></li>
+                </ul>
+
+            </div>
+
+        }
+    </div>
+    <div class="navbar-header">
+        <a class="navbar-brand" href=@Url.Action("Intermediary","User")>
+            <div class="logo text-nowrap">
+                <div class="logo__img"><i class="fa fa-chevron-right"></i></div><span class="logo__text">SAS</span>
+            </div>
+        </a>
+
+    </div>
+    @Html.Partial("TopNavBar")
+</nav>
+
+<div class="dashboard">
+    @Html.Partial("Sidebar", Model)
+</div>
+
+@Scripts.Render("~/bundles/BaseJS");

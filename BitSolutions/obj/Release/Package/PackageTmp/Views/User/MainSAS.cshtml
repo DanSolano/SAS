@@ -22,10 +22,10 @@
                                         if (@ViewBag.typeUser == "Client")
                                         {
                                             <li>
-                                                @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Client" }, null)
+                                                @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Client" }, null)
                                             </li>
                                             <li class="active">
-                                                @Html.ActionLink("Agregar solicitud de atención", "IndexAddSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
+                                                @Html.ActionLink("Add request for attention", "IndexAddSAS", "User", new { data = "addSAS", typeUser = "Client" }, null)
                                             </li>
                                         }
                                     }
@@ -40,18 +40,18 @@
                                         {
                                             case "Coordinator":
                                                 <li>
-                                                    @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
                                                 </li>
                                                 <li class="active">
-                                                    @Html.ActionLink("Ver solicitud de atención", "IndexViewSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
+                                                    @Html.ActionLink("See request for attention", "IndexViewSAS", "User", new { data = "viewSAS", typeUser = "Coordinator" }, null)
                                                 </li>
                                                 break;
                                             case "HelpDeskCoordinator":
                                                 <li>
-                                                    @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Coordinador Mesa" }, null)
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
                                                 </li>
                                                 <li class="active">
-                                                    @Html.ActionLink("Ver solicitud de atención", "IndexAddSAS", "User", new { data = "viewSAS", typeUser = "Coordinador Mesa" }, null)
+                                                    @Html.ActionLink("See request for attention", "IndexViewSAS", "User", new { data = "viewSAS", typeUser = "HelpDeskCoordinator" }, null)
                                                 </li>
                                                 break;
                                         }
@@ -68,10 +68,30 @@
                                         {
                                             case "HelpDeskCoordinator":
                                                 <li>
-                                                    @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Coordinador Mesa" }, null)
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
                                                 </li>
                                                 <li class="active">
-                                                    @Html.ActionLink("Ver solicitud de atención", "IndexAddSAS", "User", new { data = "viewSAS", typeUser = "Coordinador Mesa" }, null)
+                                                    @Html.ActionLink("Help desk", "IndexViewHelpDesk", "User", new { data = "helpDesk", typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                break;
+                                        }
+
+                                    }
+
+                                </ol>
+                                break;
+                            case "assignTicket":
+                                <ol class="breadcrumb">
+                                    @if (@ViewBag.typeUser != null)
+                                    {
+                                        switch (@ViewBag.typeUser)
+                                        {
+                                            case "HelpDeskCoordinator":
+                                                <li>
+                                                    @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
+                                                </li>
+                                                <li class="active">
+                                                    @Html.ActionLink("Assign ticket", "IndexAddSAS", "User", new { data = "viewSAS", typeUser = "HelpDeskCoordinator" }, null)
                                                 </li>
                                                 break;
                                         }
@@ -93,17 +113,17 @@
                                 {
                                     case "Coordinator":
                                         <li>
-                                            @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Coordinator" }, null)
                                         </li>
                                         break;
                                     case "Client":
                                         <li>
-                                            @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Client" }, null)
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "Client" }, null)
                                         </li>
                                         break;
                                     case "HelpDeskCoordinator":
                                         <li>
-                                            @Html.ActionLink("Solicitudes", "IndexSAS", "User", new { typeUser = "Coordinador Mesa" }, null)
+                                            @Html.ActionLink("Request", "IndexSAS", "User", new { typeUser = "HelpDeskCoordinator" }, null)
                                         </li>
                                         break;
 
@@ -168,8 +188,8 @@
                                                     case "Coordinator":
                                                         @Html.Partial("~/Views/SAS/ViewSASCoordinator.cshtml", Model)
                                                         break;
-                                                    case "Coordinador Mesa":
-                                                        @Html.Partial("~/Views/SAS/ViewSASClient.cshtml", Model)
+                                                    case "HelpDeskCoordinator":
+                                                        @Html.Partial("~/Views/SAS/ViewSASCoordinator.cshtml", Model)
                                                         break;
                                                 }
 
@@ -190,6 +210,24 @@
                                                 if (ViewBag.typeUser == "HelpDeskCoordinator")
                                                 {
                                                     @Html.Partial("~/Views/SAS/HelpDesk.cshtml")
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                            case "assignTicket":
+                                <div class="col-md-12">
+                                    <div class="panel panel-danger">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Mesa de ayuda</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            @if (@ViewBag.typeUser != null)
+                                            {
+                                                if (ViewBag.typeUser == "HelpDeskCoordinator")
+                                                {
+                                                    @Html.Partial("~/Views/SAS/AssignTicketToCoordinator.cshtml")
                                                 }
                                             }
                                         </div>
