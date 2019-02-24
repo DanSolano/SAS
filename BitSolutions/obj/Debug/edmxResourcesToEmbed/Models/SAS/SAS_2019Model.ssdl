@@ -66,9 +66,17 @@
       <PropertyRef Name="ID_Team" />
     </Key>
     <Property Name="ID_Team" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ID_User_In_Charge" Type="int" />
     <Property Name="Date_Create" Type="datetime" Nullable="false" />
     <Property Name="Date_Finish" Type="datetime" Nullable="false" />
+    <Property Name="Details" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Team_member">
+    <Key>
+      <PropertyRef Name="ID_Team" />
+      <PropertyRef Name="ID_Employee" />
+    </Key>
+    <Property Name="ID_Team" Type="int" Nullable="false" />
+    <Property Name="ID_Employee" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Ticket">
     <Key>
@@ -161,15 +169,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Team__ID_User_In__1EA48E88">
-    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
-    <End Role="Team" Type="Self.Team" Multiplicity="*" />
+  <Association Name="FK__Team_memb__ID_Em__3F115E1A">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="1" />
+    <End Role="Team_member" Type="Self.Team_member" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DB_RRHH_Employee">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="Team">
-        <PropertyRef Name="ID_User_In_Charge" />
+      <Dependent Role="Team_member">
+        <PropertyRef Name="ID_Employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Team_memb__ID_Te__3E1D39E1">
+    <End Role="Team" Type="Self.Team" Multiplicity="1" />
+    <End Role="Team_member" Type="Self.Team_member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID_Team" />
+      </Principal>
+      <Dependent Role="Team_member">
+        <PropertyRef Name="ID_Team" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -299,6 +319,7 @@
     <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Team_member" EntityType="Self.Team_member" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ticket_Attachments" EntityType="Self.Ticket_Attachments" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ticket_History" EntityType="Self.Ticket_History" Schema="dbo" store:Type="Tables" />
@@ -319,9 +340,13 @@
       <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
       <End Role="Employee_Ticket" EntitySet="Employee_Ticket" />
     </AssociationSet>
-    <AssociationSet Name="FK__Team__ID_User_In__1EA48E88" Association="Self.FK__Team__ID_User_In__1EA48E88">
+    <AssociationSet Name="FK__Team_memb__ID_Em__3F115E1A" Association="Self.FK__Team_memb__ID_Em__3F115E1A">
       <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="Team_member" EntitySet="Team_member" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Team_memb__ID_Te__3E1D39E1" Association="Self.FK__Team_memb__ID_Te__3E1D39E1">
       <End Role="Team" EntitySet="Team" />
+      <End Role="Team_member" EntitySet="Team_member" />
     </AssociationSet>
     <AssociationSet Name="FK__Ticket__ID_Clien__7A672E12" Association="Self.FK__Ticket__ID_Clien__7A672E12">
       <End Role="DB_Client" EntitySet="DB_Client" />

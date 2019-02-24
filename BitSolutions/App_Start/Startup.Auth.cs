@@ -22,7 +22,7 @@ namespace BitSolutions
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 LogoutPath = new PathString("/Account/LogOff"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(30.0),
+                ExpireTimeSpan = TimeSpan.FromMinutes(20.0),
                 ReturnUrlParameter = "/Home/Index"
             });
 

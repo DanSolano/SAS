@@ -70,9 +70,9 @@
       <EntityTypeMapping TypeName="SAS_2019Model.Team">
         <MappingFragment StoreEntitySet="Team">
           <ScalarProperty Name="ID_Team" ColumnName="ID_Team" />
-          <ScalarProperty Name="ID_User_In_Charge" ColumnName="ID_User_In_Charge" />
           <ScalarProperty Name="Date_Create" ColumnName="Date_Create" />
           <ScalarProperty Name="Date_Finish" ColumnName="Date_Finish" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -122,6 +122,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="Team_member" TypeName="SAS_2019Model.Team_member" StoreEntitySet="Team_member">
+      <EndProperty Name="DB_RRHH_Employee">
+        <ScalarProperty Name="ID" ColumnName="ID_Employee" />
+      </EndProperty>
+      <EndProperty Name="Team">
+        <ScalarProperty Name="ID_Team" ColumnName="ID_Team" />
+      </EndProperty>
+    </AssociationSetMapping>
     <FunctionImportMapping FunctionImportName="SearchByStatusClient" FunctionName="SAS_2019Model.Store.SearchByStatusClient">
       <ResultMapping>
         <ComplexTypeMapping TypeName="SAS_2019Model.SearchByStatusClient_Result">
@@ -145,6 +153,7 @@
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="ID_Rol" ColumnName="ID_Rol" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

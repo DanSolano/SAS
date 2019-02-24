@@ -19,10 +19,10 @@ namespace BitSolutions.Models.SAS
         {
             this.Employee_Ticket = new HashSet<Employee_Ticket>();
             this.Employee_Ticket1 = new HashSet<Employee_Ticket>();
-            this.Teams = new HashSet<Team>();
             this.Tickets = new HashSet<Ticket>();
             this.Ticket_History = new HashSet<Ticket_History>();
             this.Ticket_History1 = new HashSet<Ticket_History>();
+            this.Teams = new HashSet<Team>();
         }
     
         public int ID { get; set; }
@@ -43,13 +43,13 @@ namespace BitSolutions.Models.SAS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee_Ticket> Employee_Ticket1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Team> Teams { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket_History> Ticket_History { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket_History> Ticket_History1 { get; set; }
         public virtual User_Rol User_Rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Team> Teams { get; set; }
     }
 }

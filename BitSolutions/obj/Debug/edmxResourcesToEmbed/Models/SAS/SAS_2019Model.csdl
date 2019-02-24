@@ -37,11 +37,11 @@
     <Property Name="Status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Employee_Ticket" Relationship="Self.FK__Employee___ID_Em__05D8E0BE" FromRole="DB_RRHH_Employee" ToRole="Employee_Ticket" />
     <NavigationProperty Name="Employee_Ticket1" Relationship="Self.FK__Employee___ID_Us__08B54D69" FromRole="DB_RRHH_Employee" ToRole="Employee_Ticket" />
-    <NavigationProperty Name="Teams" Relationship="Self.FK__Team__ID_User_In__1EA48E88" FromRole="DB_RRHH_Employee" ToRole="Team" />
     <NavigationProperty Name="Tickets" Relationship="Self.FK__Ticket__ID_User___7B5B524B" FromRole="DB_RRHH_Employee" ToRole="Ticket" />
     <NavigationProperty Name="Ticket_History" Relationship="Self.FK__Ticket_Hi__UserC__00200768" FromRole="DB_RRHH_Employee" ToRole="Ticket_History" />
     <NavigationProperty Name="Ticket_History1" Relationship="Self.FK__Ticket_Hi__UserU__7F2BE32F" FromRole="DB_RRHH_Employee" ToRole="Ticket_History" />
     <NavigationProperty Name="User_Rol" Relationship="Self.FK__User_Rol__ID_Emp__1AD3FDA4" FromRole="DB_RRHH_Employee" ToRole="User_Rol" />
+    <NavigationProperty Name="Teams" Relationship="Self.Team_member" FromRole="DB_RRHH_Employee" ToRole="Team" />
   </EntityType>
   <EntityType Name="Employee_Ticket">
     <Key>
@@ -80,10 +80,10 @@
       <PropertyRef Name="ID_Team" />
     </Key>
     <Property Name="ID_Team" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ID_User_In_Charge" Type="Int32" />
     <Property Name="Date_Create" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Date_Finish" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="DB_RRHH_Employee" Relationship="Self.FK__Team__ID_User_In__1EA48E88" FromRole="Team" ToRole="DB_RRHH_Employee" />
+    <Property Name="Details" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DB_RRHH_Employee" Relationship="Self.Team_member" FromRole="Team" ToRole="DB_RRHH_Employee" />
   </EntityType>
   <EntityType Name="Ticket">
     <Key>
@@ -187,18 +187,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Team__ID_User_In__1EA48E88">
-    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
-    <End Role="Team" Type="Self.Team" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DB_RRHH_Employee">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Team">
-        <PropertyRef Name="ID_User_In_Charge" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__Ticket__ID_User___7B5B524B">
     <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="0..1" />
     <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
@@ -295,6 +283,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="Team_member">
+    <End Role="DB_RRHH_Employee" Type="Self.DB_RRHH_Employee" Multiplicity="*" />
+    <End Role="Team" Type="Self.Team" Multiplicity="*" />
+  </Association>
   <EntityContainer Name="SAS_2019Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="DB_Client" EntityType="Self.DB_Client" />
     <EntitySet Name="DB_RRHH_Employee" EntityType="Self.DB_RRHH_Employee" />
@@ -321,10 +313,6 @@
     <AssociationSet Name="FK__Employee___ID_Us__08B54D69" Association="Self.FK__Employee___ID_Us__08B54D69">
       <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
       <End Role="Employee_Ticket" EntitySet="Employee_Ticket" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Team__ID_User_In__1EA48E88" Association="Self.FK__Team__ID_User_In__1EA48E88">
-      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
-      <End Role="Team" EntitySet="Teams" />
     </AssociationSet>
     <AssociationSet Name="FK__Ticket__ID_User___7B5B524B" Association="Self.FK__Ticket__ID_User___7B5B524B">
       <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
@@ -357,6 +345,10 @@
     <AssociationSet Name="FK__Ticket_Hi__ID_Ti__7E37BEF6" Association="Self.FK__Ticket_Hi__ID_Ti__7E37BEF6">
       <End Role="Ticket" EntitySet="Tickets" />
       <End Role="Ticket_History" EntitySet="Ticket_History" />
+    </AssociationSet>
+    <AssociationSet Name="Team_member" Association="Self.Team_member">
+      <End Role="DB_RRHH_Employee" EntitySet="DB_RRHH_Employee" />
+      <End Role="Team" EntitySet="Teams" />
     </AssociationSet>
     <FunctionImport Name="SearchByStatusClient" ReturnType="Collection(SAS_2019Model.SearchByStatusClient_Result)">
       <Parameter Name="Status" Mode="In" Type="String" />
@@ -394,5 +386,6 @@
     <Property Type="String" Name="UserName" Nullable="false" MaxLength="45" />
     <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
     <Property Type="Int32" Name="ID_Rol" Nullable="false" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="75" />
   </ComplexType>
 </Schema>

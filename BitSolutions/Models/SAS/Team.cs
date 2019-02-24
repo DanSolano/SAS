@@ -14,11 +14,18 @@ namespace BitSolutions.Models.SAS
     
     public partial class Team
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Team()
+        {
+            this.DB_RRHH_Employee = new HashSet<DB_RRHH_Employee>();
+        }
+    
         public int ID_Team { get; set; }
-        public Nullable<int> ID_User_In_Charge { get; set; }
         public System.DateTime Date_Create { get; set; }
         public System.DateTime Date_Finish { get; set; }
+        public string Details { get; set; }
     
-        public virtual DB_RRHH_Employee DB_RRHH_Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DB_RRHH_Employee> DB_RRHH_Employee { get; set; }
     }
 }

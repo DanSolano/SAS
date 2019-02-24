@@ -194,9 +194,6 @@
     <Compile Include="Models\RRHHEmployee\DB_RRHH_Employee.cs">
       <DependentUpon>DB_RRHH_EmployeeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SAS\DB_Client.cs">
-      <DependentUpon>SAS_2019Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Client\DB_ClientModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,9 +208,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DB_ClientModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SAS\DB_RRHH_Employee.cs">
-      <DependentUpon>SAS_2019Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RRHHEmployee\DB_RRHH_EmployeeModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -236,14 +230,23 @@
     <Compile Include="Models\RRHHEmployee\Direction.cs">
       <DependentUpon>DB_RRHH_EmployeeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SAS\Employee_Ticket.cs">
-      <DependentUpon>SAS_2019Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Client\Enterprise.cs">
       <DependentUpon>DB_ClientModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Client\spSharedData_Result.cs">
+      <DependentUpon>DB_ClientModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SAS\DB_Client.cs">
+      <DependentUpon>SAS_2019Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SAS\DB_RRHH_Employee.cs">
+      <DependentUpon>SAS_2019Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SAS\Employee_Ticket.cs">
+      <DependentUpon>SAS_2019Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SAS\Rol.cs">
       <DependentUpon>SAS_2019Model.tt</DependentUpon>
     </Compile>
@@ -270,9 +273,6 @@
     </Compile>
     <Compile Include="Models\SAS\spLoginByUsernamePassword_Result.cs">
       <DependentUpon>SAS_2019Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Client\spSharedData_Result.cs">
-      <DependentUpon>DB_ClientModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SAS\sysdiagram.cs">
       <DependentUpon>SAS_2019Model.tt</DependentUpon>

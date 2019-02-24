@@ -15,6 +15,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using System.Net.Mail;
 
 namespace BitSolutions.Controllers
 {
@@ -22,6 +23,7 @@ namespace BitSolutions.Controllers
     {
         #region Private Properties
         private SAS_2019Entities dbManager;
+        private static string actualSession = "";
         #endregion
 
         public AccountController()
@@ -32,14 +34,32 @@ namespace BitSolutions.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            //Se determina si se venció la sesión
+            if (Session["role_id"] == null)
+            {
+                if (actualSession != "")
+                {
+                    ViewBag.endSession = true;
+                }
+            }
+
             try
             {
                 // Verification.
                 if (Request.IsAuthenticated)
                 {
-                    return View();
-                    // Info.
-                    return RedirectToLocal(returnUrl);
+                    //Si hay una sesión previa toma el dato del rol de la sesión e inicia en dicha sesión de nuevo
+                    var userIdentity = (ClaimsIdentity)User.Identity;
+                    var claims = userIdentity.Claims;
+                    var roleClaimType = userIdentity.RoleClaimType;
+                    var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+
+                    foreach (var item in roles)
+                    {
+                        Session["role_id"] = item.Value;
+                    }
+                    
+                    return RedirectToAction("Intermediary", "User");
                 }
             }
             catch (Exception ex){}
@@ -60,6 +80,7 @@ namespace BitSolutions.Controllers
         {
             string password = "";
             string path = "";
+
             try
             {
                 if (ModelState.IsValid)
@@ -86,6 +107,9 @@ namespace BitSolutions.Controllers
 
                         Session["role_id"] = logindetails.ID_Rol;
                         Session["username"] = model.UserName;
+                        Session["email"] = logindetails.Email;
+
+                        actualSession = logindetails.ID_Rol.ToString();
 
                         //return RedirectToAction("Intermediary", "User", new { data = "Datos de prueba" });
                         return RedirectToAction("Intermediary", "User");
@@ -114,7 +138,7 @@ namespace BitSolutions.Controllers
                 // Setting.
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
-
+                
                 // Sign Out.
                 authenticationManager.SignOut();
 
@@ -122,6 +146,7 @@ namespace BitSolutions.Controllers
                 Session["role_id"] = null;
                 Session["ticketList"] = null;
                 Session["username"] = null;
+                Session["email"] = null;
             }
             catch (Exception ex){}
 

@@ -4,12 +4,23 @@
     @Styles.Render("~/Content/LoginCss")
 }
 
+
+
+
 <div class="login">
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login__form" }))
     {
         @Html.AntiForgeryToken()
+
         <div class="login__logo"></div>
 
+        if (ViewBag.endSession == true)
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><i class="alert-ico fa fa-fw fa-exclamation"></i><strong>Warning </strong> The expired session please log in again
+            </div>
+            <br />
+        }
 
         <div class="form-group">
             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Login", autocomplete = "off" } })

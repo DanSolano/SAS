@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fe3e6c47c4444151a2f613c49181d5ac" Name="Diagram1">
+      <Diagram DiagramId="030e04a502be4480986185755339f868" Name="Diagram1">
         <EntityTypeShape EntityType="SAS_2019Model.DB_Client" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SAS_2019Model.DB_RRHH_Employee" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SAS_2019Model.Employee_Ticket" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
@@ -19,7 +19,6 @@
         <AssociationConnector Association="SAS_2019Model.FK__Ticket__ID_Clien__7A672E12" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Employee___ID_Em__05D8E0BE" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Employee___ID_Us__08B54D69" ManuallyRouted="false" />
-        <AssociationConnector Association="SAS_2019Model.FK__Team__ID_User_In__1EA48E88" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Ticket__ID_User___7B5B524B" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Ticket_Hi__UserC__00200768" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Ticket_Hi__UserU__7F2BE32F" ManuallyRouted="false" />
@@ -28,6 +27,7 @@
         <AssociationConnector Association="SAS_2019Model.FK__User_Rol__ID_Rol__1BC821DD" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Ticket_At__ID_Ti__02FC7413" ManuallyRouted="false" />
         <AssociationConnector Association="SAS_2019Model.FK__Ticket_Hi__ID_Ti__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="SAS_2019Model.Team_member" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

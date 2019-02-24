@@ -16,5 +16,6 @@ namespace BitSolutions.Models.SAS
         public string UserName { get; set; }
         public string Password { get; set; }
         public int ID_Rol { get; set; }
+        public string Email { get; set; }
     }
 }
